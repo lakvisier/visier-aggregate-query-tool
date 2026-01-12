@@ -1,0 +1,112 @@
+{
+  "_comment": "This is a template for creating Visier aggregate queries. Copy this file and modify it for your needs.",
+  "_instructions": "Remove all _comment and _instructions fields before running queries",
+  
+  "description": "Template: Modify this description to describe your query",
+  
+  "payload": {
+    "query": {
+      "_comment_source": "The metric you want to measure (e.g., employeeCount, headcount, turnover)",
+      "source": {
+        "metric": "employeeCount"
+      },
+      
+      "_comment_axes": "Axes define how to group/break down the data. You need at least one axis.",
+      "_comment_axes_note": "Each axis is a dimension (like Country, Function, Organization).",
+      "axes": [
+        {
+          "dimensionLevelSelection": {
+            "_comment_dimension": "The dimension name (e.g., Country_Cost, Organization_Hierarchy, Function)",
+            "dimension": {
+              "name": "Country_Cost",
+              "_comment_qualifyingPath": "Usually 'Employee' for employee-related dimensions",
+              "qualifyingPath": "Employee"
+            },
+            "_comment_levelIds": "Level IDs specify the granularity. For Country_Cost, use ['Country']. For Organization_Hierarchy, use tenant-specific levels like ['Profit_Center'] or ['Level_2']",
+            "levelIds": ["Country"]
+          }
+        }
+        "_comment_add_more_axes": "Add more objects here to group by multiple dimensions (e.g., Country AND Function)"
+      ],
+      
+      "_comment_filters": "Filters are optional. Use them to restrict the data (e.g., only Full-time employees)",
+      "filters": [
+        {
+          "_comment_filter_type": "memberSet filters by dimension members (e.g., specific employment types)",
+          "memberSet": {
+            "dimension": {
+              "name": "Employment_Type",
+              "qualifyingPath": "Employee"
+            },
+            "values": {
+              "included": [
+                {
+                  "_comment_path": "The path to the dimension member. Use your tenant's exact member names",
+                  "path": ["Full-time shifts"]
+                }
+              ]
+            }
+          }
+        }
+        "_comment_alternative_filter": "You can also use 'selectionConcept' for boolean filters like isManager"
+      ],
+      
+      "_comment_timeIntervals": "Time period is REQUIRED. Define when to query data.",
+      "timeIntervals": {
+        "_comment_fromDateTime": "Start date. For year-end snapshots, use the start of the NEXT year",
+        "_comment_time_example": "For 2021-2025 year-end data, use '2026-01-01' with BACKWARD direction",
+        "fromDateTime": "2026-01-01",
+        
+        "_comment_intervalPeriodType": "YEAR, MONTH, DAY, etc. Use YEAR for annual snapshots, DAY for point-in-time",
+        "intervalPeriodType": "YEAR",
+        
+        "_comment_intervalCount": "How many periods to go back (or forward)",
+        "intervalCount": 5,
+        
+        "_comment_direction": "BACKWARD goes from fromDateTime into the past, FORWARD goes into the future",
+        "direction": "BACKWARD"
+      }
+    },
+    
+    "_comment_options": "Options control how results are formatted and displayed",
+    "options": {
+      "_comment_calendarType": "Usually TENANT_CALENDAR (uses your tenant's calendar)",
+      "calendarType": "TENANT_CALENDAR",
+      
+      "_comment_visibility": "ELIMINATE removes zero/null rows from results. Use INCLUDE to show them",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      
+      "internal": {
+        "_comment_alignTimeAxis": "Aligns timestamps to period end (e.g., 2024-12-31T23:59:59.999Z)",
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  },
+  
+  "_common_patterns": {
+    "_pattern_1": "Year-end snapshots: fromDateTime = start of next year, direction = BACKWARD, intervalPeriodType = YEAR",
+    "_pattern_2": "Point-in-time: fromDateTime = specific date, intervalPeriodType = DAY, intervalCount = 1",
+    "_pattern_3": "Monthly data: intervalPeriodType = MONTH, intervalCount = 12 (for 12 months)",
+    "_pattern_4": "Multiple dimensions: Add multiple objects to axes array",
+    "_pattern_5": "No filters: Remove the filters array entirely or leave it empty"
+  },
+  
+  "_dimension_examples": {
+    "_Country_Cost": {
+      "name": "Country_Cost",
+      "qualifyingPath": "Employee",
+      "levelIds": ["Country"]
+    },
+    "_Organization_Hierarchy": {
+      "name": "Organization_Hierarchy",
+      "qualifyingPath": "Employee",
+      "levelIds": ["Level_2"]
+    },
+    "_Function": {
+      "name": "Function",
+      "qualifyingPath": "Employee",
+      "levelIds": ["Function"]
+    }
+  }
+}

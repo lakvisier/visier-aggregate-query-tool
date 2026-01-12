@@ -6,16 +6,16 @@ This is the main entry point for clients to run aggregate queries.
 
 Usage:
     # First time setup (creates .env file)
-    python run_aggregate_query.py --setup
+    python query.py --setup
 
     # Run a query with a JSON payload file
-    python run_aggregate_query.py --payload examples/query_payload_examples.json
+    python query.py --payload examples/query_payload_examples.json
 
     # Run with custom output file
-    python run_aggregate_query.py --payload examples/query_payload_examples.json --output results.csv
+    python query.py --payload examples/query_payload_examples.json --output results.csv
 
     # Validate payload without executing
-    python run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
+    python query.py --payload examples/query_payload_examples.json --validate-only
 
 For more help, see CLIENT_WALKTHROUGH.md
 """
@@ -31,7 +31,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
 # Import from the same directory
-from aggregate_query_vanilla import (
+from client import (
     execute_vanilla_aggregate_query,
     convert_vanilla_response_to_dataframe,
     load_query_payload_from_json,
@@ -150,7 +150,7 @@ def main():
         "--output", "-o",
         type=str,
         default=None,
-        help="CSV file path to save results (default: output/query_results.csv)"
+        help="CSV file path to save results (default: output/<payload_name>_results.csv)"
     )
     parser.add_argument(
         "--setup",
@@ -173,7 +173,7 @@ def main():
     # Handle setup mode
     if args.setup:
         try:
-            from setup_credentials import setup_credentials_interactive
+            from setup import setup_credentials_interactive
             setup_credentials_interactive()
             return 0
         except ImportError:
@@ -184,7 +184,7 @@ def main():
     # Require payload file
     if not args.payload:
         print_error("Payload file is required. Use --payload <file> to specify a JSON payload file.")
-        print_info("Example: python run_aggregate_query.py --payload examples/query_payload_examples.json")
+        print_info("Example: python query.py --payload examples/query_payload_examples.json")
         parser.print_help()
         return 1
     
@@ -292,11 +292,15 @@ def main():
     if args.output:
         output_path = Path(args.output)
     else:
-        # Default to output directory
+        # Default to output directory with filename based on payload
         aggregate_dir = Path(__file__).parent
         output_dir = aggregate_dir / "output"
         output_dir.mkdir(exist_ok=True)
-        output_path = output_dir / "query_results.csv"
+        
+        # Generate output filename from payload filename
+        payload_name = payload_path.stem  # Get filename without extension
+        output_filename = f"{payload_name}_results.csv"
+        output_path = output_dir / output_filename
     
     try:
         df.to_csv(output_path, index=False)
