@@ -88,28 +88,24 @@ A query payload is a JSON file that defines:
 
 ## 📓 Jupyter Notebook
 
-For interactive analysis and visualization, use the Jupyter notebook:
+For interactive learning about the Visier API, use the Jupyter notebook:
 
 ```bash
-# Install Jupyter (if not already installed)
-pip install jupyter matplotlib seaborn
+# Install dependencies (includes Jupyter)
+pip install -r requirements.txt
 
 # Launch Jupyter
 jupyter notebook examples/org_hierarchy_query.ipynb
 ```
 
-The notebook includes:
-- Step-by-step query execution using the org hierarchy payload
-- Data exploration and visualization
-- Time series analysis
-- Multi-dimensional analysis (Organization × Location, Organization × Country)
-- Interactive charts and heatmaps
-- Customizable examples
+The notebook is an educational tutorial that teaches:
+- How the Visier Aggregate Query API works
+- Query payload structure and components
+- Understanding dimensions, metrics, and filters
+- How to modify queries for your needs
+- Best practices and common patterns
 
-**Note**: The notebook uses `matplotlib` and `seaborn` for visualizations. Install them with:
-```bash
-pip install matplotlib seaborn
-```
+**Note**: The notebook focuses on API education, not data analysis. All required packages (including Jupyter and ipykernel) are in `requirements.txt`.
 
 ## 💻 Programmatic Usage
 

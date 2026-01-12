@@ -1,0 +1,303 @@
+Measures,DateInRange,Organization_Hierarchy,Location,Country_Cost,value,support
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,APAC,Australia,34.0,34
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,APAC,Japan,16.0,16
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,EMEA,South Africa,15.0,15
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,EMEA,United Kingdom,34.0,34
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,North America,Canada,23.0,23
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,North America,United States,85.0,85
+employeeCount,2021-12-31T23:59:59.999Z - [0],Customer Support,South America,Brazil,13.0,13
+employeeCount,2021-12-31T23:59:59.999Z - [0],E-Commerce,North America,United States,251.0,251
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,APAC,Australia,28.0,28
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,APAC,Japan,2.0,2
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,EMEA,Poland,45.0,45
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,EMEA,Spain,31.0,31
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,EMEA,United Kingdom,59.0,59
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,North America,Canada,2.0,2
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,North America,United States,190.0,190
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,South America,Argentina,45.0,45
+employeeCount,2021-12-31T23:59:59.999Z - [0],Finance,South America,Brazil,21.0,21
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,APAC,Australia,1.0,1
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,APAC,Japan,9.0,9
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,EMEA,Poland,7.0,7
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,EMEA,Spain,7.0,7
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,EMEA,United Kingdom,28.0,28
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,North America,Canada,12.0,12
+employeeCount,2021-12-31T23:59:59.999Z - [0],HR,North America,United States,55.0,55
+employeeCount,2021-12-31T23:59:59.999Z - [0],IT,EMEA,Poland,27.0,27
+employeeCount,2021-12-31T23:59:59.999Z - [0],IT,EMEA,South Africa,7.0,7
+employeeCount,2021-12-31T23:59:59.999Z - [0],IT,EMEA,United Kingdom,30.0,30
+employeeCount,2021-12-31T23:59:59.999Z - [0],IT,North America,Canada,35.0,35
+employeeCount,2021-12-31T23:59:59.999Z - [0],IT,North America,United States,20.0,20
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,APAC,Australia,4.0,4
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,APAC,Japan,36.0,36
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,EMEA,Poland,22.0,22
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,EMEA,Spain,31.0,31
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,EMEA,United Kingdom,24.0,24
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,North America,Canada,17.0,17
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,North America,United States,143.0,143
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,South America,Argentina,29.0,29
+employeeCount,2021-12-31T23:59:59.999Z - [0],Marketing,South America,Brazil,31.0,31
+employeeCount,2021-12-31T23:59:59.999Z - [0],Office of CEO,North America,United States,7.0,7
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,APAC,Australia,127.0,127
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,APAC,Japan,325.0,325
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,EMEA,Poland,1.0,1
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,EMEA,Spain,42.0,42
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,EMEA,United Kingdom,38.0,38
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,North America,Canada,128.0,128
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,North America,United States,430.0,430
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,South America,Argentina,1.0,1
+employeeCount,2021-12-31T23:59:59.999Z - [0],Operations,South America,Brazil,207.0,207
+employeeCount,2021-12-31T23:59:59.999Z - [0],Product,APAC,Japan,8.0,8
+employeeCount,2021-12-31T23:59:59.999Z - [0],Product,EMEA,Spain,16.0,16
+employeeCount,2021-12-31T23:59:59.999Z - [0],Product,EMEA,United Kingdom,8.0,8
+employeeCount,2021-12-31T23:59:59.999Z - [0],Product,North America,United States,12.0,12
+employeeCount,2021-12-31T23:59:59.999Z - [0],Product,South America,Brazil,5.0,5
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,APAC,Australia,11.0,11
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,EMEA,Poland,22.0,22
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,EMEA,United Kingdom,30.0,30
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,North America,Canada,43.0,43
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,North America,United States,123.0,123
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,South America,Argentina,11.0,11
+employeeCount,2021-12-31T23:59:59.999Z - [0],Sales,South America,Brazil,4.0,4
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,APAC,Australia,41.0,41
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,APAC,Japan,20.0,20
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,EMEA,South Africa,18.0,18
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,EMEA,United Kingdom,45.0,45
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,North America,Canada,27.0,27
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,North America,United States,96.0,96
+employeeCount,2022-12-31T23:59:59.999Z - [1],Customer Support,South America,Brazil,18.0,18
+employeeCount,2022-12-31T23:59:59.999Z - [1],E-Commerce,North America,United States,234.0,234
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,APAC,Australia,30.0,30
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,APAC,Japan,2.0,2
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,EMEA,Poland,51.0,51
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,EMEA,Spain,32.0,32
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,EMEA,United Kingdom,66.0,66
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,North America,Canada,1.0,1
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,North America,United States,202.0,202
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,South America,Argentina,52.0,52
+employeeCount,2022-12-31T23:59:59.999Z - [1],Finance,South America,Brazil,30.0,30
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,APAC,Australia,1.0,1
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,APAC,Japan,12.0,12
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,EMEA,Poland,8.0,8
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,EMEA,Spain,13.0,13
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,EMEA,United Kingdom,40.0,40
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,North America,Canada,17.0,17
+employeeCount,2022-12-31T23:59:59.999Z - [1],HR,North America,United States,64.0,64
+employeeCount,2022-12-31T23:59:59.999Z - [1],IT,EMEA,Poland,31.0,31
+employeeCount,2022-12-31T23:59:59.999Z - [1],IT,EMEA,South Africa,9.0,9
+employeeCount,2022-12-31T23:59:59.999Z - [1],IT,EMEA,United Kingdom,29.0,29
+employeeCount,2022-12-31T23:59:59.999Z - [1],IT,North America,Canada,40.0,40
+employeeCount,2022-12-31T23:59:59.999Z - [1],IT,North America,United States,25.0,25
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,APAC,Australia,4.0,4
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,APAC,Japan,40.0,40
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,EMEA,Poland,23.0,23
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,EMEA,Spain,36.0,36
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,EMEA,United Kingdom,15.0,15
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,North America,Canada,21.0,21
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,North America,United States,133.0,133
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,South America,Argentina,25.0,25
+employeeCount,2022-12-31T23:59:59.999Z - [1],Marketing,South America,Brazil,46.0,46
+employeeCount,2022-12-31T23:59:59.999Z - [1],Office of CEO,North America,United States,6.0,6
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,APAC,Australia,127.0,127
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,APAC,Japan,311.0,311
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,EMEA,Poland,3.0,3
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,EMEA,Spain,47.0,47
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,EMEA,United Kingdom,44.0,44
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,North America,Canada,129.0,129
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,North America,United States,442.0,442
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,South America,Argentina,1.0,1
+employeeCount,2022-12-31T23:59:59.999Z - [1],Operations,South America,Brazil,200.0,200
+employeeCount,2022-12-31T23:59:59.999Z - [1],Product,APAC,Japan,12.0,12
+employeeCount,2022-12-31T23:59:59.999Z - [1],Product,EMEA,Spain,20.0,20
+employeeCount,2022-12-31T23:59:59.999Z - [1],Product,EMEA,United Kingdom,10.0,10
+employeeCount,2022-12-31T23:59:59.999Z - [1],Product,North America,United States,20.0,20
+employeeCount,2022-12-31T23:59:59.999Z - [1],Product,South America,Brazil,10.0,10
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,APAC,Australia,15.0,15
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,EMEA,Poland,17.0,17
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,EMEA,United Kingdom,39.0,39
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,North America,Canada,35.0,35
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,North America,United States,133.0,133
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,South America,Argentina,11.0,11
+employeeCount,2022-12-31T23:59:59.999Z - [1],Sales,South America,Brazil,4.0,4
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,APAC,Australia,49.0,49
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,APAC,Japan,27.0,27
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,EMEA,South Africa,26.0,26
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,EMEA,United Kingdom,50.0,50
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,North America,Canada,30.0,30
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,North America,United States,108.0,108
+employeeCount,2023-12-31T23:59:59.999Z - [2],Customer Support,South America,Brazil,22.0,22
+employeeCount,2023-12-31T23:59:59.999Z - [2],E-Commerce,North America,United States,251.0,251
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,APAC,Australia,32.0,32
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,APAC,Japan,2.0,2
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,EMEA,Poland,52.0,52
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,EMEA,Spain,32.0,32
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,EMEA,United Kingdom,67.0,67
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,North America,Canada,1.0,1
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,North America,United States,200.0,200
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,South America,Argentina,60.0,60
+employeeCount,2023-12-31T23:59:59.999Z - [2],Finance,South America,Brazil,28.0,28
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,APAC,Australia,1.0,1
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,APAC,Japan,16.0,16
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,EMEA,Poland,10.0,10
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,EMEA,Spain,16.0,16
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,EMEA,United Kingdom,47.0,47
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,North America,Canada,19.0,19
+employeeCount,2023-12-31T23:59:59.999Z - [2],HR,North America,United States,77.0,77
+employeeCount,2023-12-31T23:59:59.999Z - [2],IT,EMEA,Poland,37.0,37
+employeeCount,2023-12-31T23:59:59.999Z - [2],IT,EMEA,South Africa,14.0,14
+employeeCount,2023-12-31T23:59:59.999Z - [2],IT,EMEA,United Kingdom,32.0,32
+employeeCount,2023-12-31T23:59:59.999Z - [2],IT,North America,Canada,58.0,58
+employeeCount,2023-12-31T23:59:59.999Z - [2],IT,North America,United States,18.0,18
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,APAC,Australia,4.0,4
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,APAC,Japan,46.0,46
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,EMEA,Poland,21.0,21
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,EMEA,Spain,42.0,42
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,EMEA,United Kingdom,25.0,25
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,North America,Canada,24.0,24
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,North America,United States,152.0,152
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,South America,Argentina,27.0,27
+employeeCount,2023-12-31T23:59:59.999Z - [2],Marketing,South America,Brazil,52.0,52
+employeeCount,2023-12-31T23:59:59.999Z - [2],Office of CEO,North America,United States,5.0,5
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,APAC,Australia,126.0,126
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,APAC,Japan,290.0,290
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,EMEA,Poland,2.0,2
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,EMEA,Spain,50.0,50
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,EMEA,United Kingdom,42.0,42
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,North America,Canada,125.0,125
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,North America,United States,443.0,443
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,South America,Argentina,1.0,1
+employeeCount,2023-12-31T23:59:59.999Z - [2],Operations,South America,Brazil,196.0,196
+employeeCount,2023-12-31T23:59:59.999Z - [2],Product,APAC,Japan,14.0,14
+employeeCount,2023-12-31T23:59:59.999Z - [2],Product,EMEA,Spain,20.0,20
+employeeCount,2023-12-31T23:59:59.999Z - [2],Product,EMEA,United Kingdom,16.0,16
+employeeCount,2023-12-31T23:59:59.999Z - [2],Product,North America,United States,17.0,17
+employeeCount,2023-12-31T23:59:59.999Z - [2],Product,South America,Brazil,15.0,15
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,APAC,Australia,12.0,12
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,EMEA,Poland,24.0,24
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,EMEA,United Kingdom,53.0,53
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,North America,Canada,39.0,39
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,North America,United States,125.0,125
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,South America,Argentina,10.0,10
+employeeCount,2023-12-31T23:59:59.999Z - [2],Sales,South America,Brazil,3.0,3
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,APAC,Australia,56.0,56
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,APAC,Japan,26.0,26
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,EMEA,South Africa,22.0,22
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,EMEA,United Kingdom,49.0,49
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,North America,Canada,33.0,33
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,North America,United States,102.0,102
+employeeCount,2024-12-31T23:59:59.999Z - [3],Customer Support,South America,Brazil,26.0,26
+employeeCount,2024-12-31T23:59:59.999Z - [3],E-Commerce,North America,United States,255.0,255
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,APAC,Australia,35.0,35
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,APAC,Japan,2.0,2
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,EMEA,Poland,56.0,56
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,EMEA,Spain,27.0,27
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,EMEA,United Kingdom,66.0,66
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,North America,Canada,1.0,1
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,North America,United States,199.0,199
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,South America,Argentina,59.0,59
+employeeCount,2024-12-31T23:59:59.999Z - [3],Finance,South America,Brazil,28.0,28
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,APAC,Australia,1.0,1
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,APAC,Japan,19.0,19
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,EMEA,Poland,12.0,12
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,EMEA,Spain,17.0,17
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,EMEA,United Kingdom,45.0,45
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,North America,Canada,22.0,22
+employeeCount,2024-12-31T23:59:59.999Z - [3],HR,North America,United States,83.0,83
+employeeCount,2024-12-31T23:59:59.999Z - [3],IT,EMEA,Poland,35.0,35
+employeeCount,2024-12-31T23:59:59.999Z - [3],IT,EMEA,South Africa,16.0,16
+employeeCount,2024-12-31T23:59:59.999Z - [3],IT,EMEA,United Kingdom,30.0,30
+employeeCount,2024-12-31T23:59:59.999Z - [3],IT,North America,Canada,54.0,54
+employeeCount,2024-12-31T23:59:59.999Z - [3],IT,North America,United States,20.0,20
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,APAC,Australia,3.0,3
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,APAC,Japan,49.0,49
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,EMEA,Poland,18.0,18
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,EMEA,Spain,34.0,34
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,EMEA,United Kingdom,26.0,26
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,North America,Canada,26.0,26
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,North America,United States,142.0,142
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,South America,Argentina,25.0,25
+employeeCount,2024-12-31T23:59:59.999Z - [3],Marketing,South America,Brazil,55.0,55
+employeeCount,2024-12-31T23:59:59.999Z - [3],Office of CEO,North America,United States,9.0,9
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,APAC,Australia,117.0,117
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,APAC,Japan,274.0,274
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,EMEA,Poland,1.0,1
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,EMEA,South Africa,2.0,2
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,EMEA,Spain,43.0,43
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,EMEA,United Kingdom,40.0,40
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,North America,Canada,116.0,116
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,North America,United States,427.0,427
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,South America,Argentina,3.0,3
+employeeCount,2024-12-31T23:59:59.999Z - [3],Operations,South America,Brazil,185.0,185
+employeeCount,2024-12-31T23:59:59.999Z - [3],Product,APAC,Japan,16.0,16
+employeeCount,2024-12-31T23:59:59.999Z - [3],Product,EMEA,Spain,29.0,29
+employeeCount,2024-12-31T23:59:59.999Z - [3],Product,EMEA,United Kingdom,28.0,28
+employeeCount,2024-12-31T23:59:59.999Z - [3],Product,North America,United States,19.0,19
+employeeCount,2024-12-31T23:59:59.999Z - [3],Product,South America,Brazil,18.0,18
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,APAC,Australia,15.0,15
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,EMEA,Poland,17.0,17
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,EMEA,United Kingdom,61.0,61
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,North America,Canada,36.0,36
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,North America,United States,156.0,156
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,South America,Argentina,14.0,14
+employeeCount,2024-12-31T23:59:59.999Z - [3],Sales,South America,Brazil,7.0,7
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,APAC,Australia,58.0,58
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,APAC,Japan,30.0,30
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,EMEA,South Africa,28.0,28
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,EMEA,United Kingdom,52.0,52
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,North America,Canada,39.0,39
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,North America,United States,105.0,105
+employeeCount,2025-11-27T23:59:59.999Z - [4],Customer Support,South America,Brazil,30.0,30
+employeeCount,2025-11-27T23:59:59.999Z - [4],E-Commerce,North America,United States,248.0,248
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,APAC,Australia,38.0,38
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,APAC,Japan,1.0,1
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,EMEA,Poland,51.0,51
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,EMEA,Spain,29.0,29
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,EMEA,United Kingdom,57.0,57
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,North America,Canada,1.0,1
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,North America,United States,210.0,210
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,South America,Argentina,55.0,55
+employeeCount,2025-11-27T23:59:59.999Z - [4],Finance,South America,Brazil,29.0,29
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,APAC,Australia,1.0,1
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,APAC,Japan,20.0,20
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,EMEA,Poland,14.0,14
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,EMEA,Spain,18.0,18
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,EMEA,United Kingdom,43.0,43
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,North America,Canada,25.0,25
+employeeCount,2025-11-27T23:59:59.999Z - [4],HR,North America,United States,86.0,86
+employeeCount,2025-11-27T23:59:59.999Z - [4],IT,EMEA,Poland,32.0,32
+employeeCount,2025-11-27T23:59:59.999Z - [4],IT,EMEA,South Africa,24.0,24
+employeeCount,2025-11-27T23:59:59.999Z - [4],IT,EMEA,United Kingdom,32.0,32
+employeeCount,2025-11-27T23:59:59.999Z - [4],IT,North America,Canada,51.0,51
+employeeCount,2025-11-27T23:59:59.999Z - [4],IT,North America,United States,20.0,20
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,APAC,Australia,3.0,3
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,APAC,Japan,58.0,58
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,EMEA,Poland,19.0,19
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,EMEA,Spain,29.0,29
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,EMEA,United Kingdom,26.0,26
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,North America,Canada,28.0,28
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,North America,United States,143.0,143
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,South America,Argentina,28.0,28
+employeeCount,2025-11-27T23:59:59.999Z - [4],Marketing,South America,Brazil,55.0,55
+employeeCount,2025-11-27T23:59:59.999Z - [4],Office of CEO,North America,United States,8.0,8
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,APAC,Australia,118.0,118
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,APAC,Japan,261.0,261
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,EMEA,Poland,3.0,3
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,EMEA,South Africa,2.0,2
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,EMEA,Spain,46.0,46
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,EMEA,United Kingdom,42.0,42
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,North America,Canada,113.0,113
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,North America,United States,448.0,448
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,South America,Argentina,3.0,3
+employeeCount,2025-11-27T23:59:59.999Z - [4],Operations,South America,Brazil,184.0,184
+employeeCount,2025-11-27T23:59:59.999Z - [4],Product,APAC,Japan,23.0,23
+employeeCount,2025-11-27T23:59:59.999Z - [4],Product,EMEA,Spain,37.0,37
+employeeCount,2025-11-27T23:59:59.999Z - [4],Product,EMEA,United Kingdom,32.0,32
+employeeCount,2025-11-27T23:59:59.999Z - [4],Product,North America,United States,17.0,17
+employeeCount,2025-11-27T23:59:59.999Z - [4],Product,South America,Brazil,23.0,23
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,APAC,Australia,13.0,13
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,EMEA,Poland,22.0,22
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,EMEA,United Kingdom,62.0,62
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,North America,Canada,48.0,48
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,North America,United States,159.0,159
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,South America,Argentina,14.0,14
+employeeCount,2025-11-27T23:59:59.999Z - [4],Sales,South America,Brazil,7.0,7
