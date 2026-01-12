@@ -1,0 +1,69 @@
+{
+  "description": "Visier Aggregate Query Payload - Dashboard Query Example",
+  "endpoint": "POST /v1/data/query/aggregate",
+  "payload": {
+    "query": {
+      "source": {
+        "metric": "employeeCount"
+      },
+      "axes": [
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Country_Cost",
+              "qualifyingPath": "Employee"
+            },
+            "levelIds": ["Country"]
+          }
+        }
+      ],
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Employment_Type",
+              "qualifyingPath": "Employee"
+            },
+            "values": {
+              "included": [
+                {
+                  "path": ["Full-time shifts"]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "timeIntervals": {
+        "fromDateTime": "2025-11-28",
+        "intervalPeriodType": "YEAR",
+        "intervalCount": 5,
+        "direction": "BACKWARD"
+      }
+    },
+    "options": {
+      "calendarType": "TENANT_CALENDAR",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      "internal": {
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  },
+    "notes": {
+      "axes": "At least one axis (dimension) is required. Time dimension typically doesn't need qualifyingPath.",
+      "levelled_dimensions": "For levelled dimensions (like Country_Cost), specify level IDs. Common patterns: use the dimension name itself (e.g., 'Country_Cost'), or level IDs like 'Level_1', 'Level_2'. For parent-child dimensions, level IDs are tenant-specific - use the Data Model API to discover available levels.",
+      "parent_child_hierarchies": "To switch to Organization_Hierarchy (parent-child), replace 'Country_Cost' with 'Organization_Hierarchy' and use tenant-specific level IDs like ['Profit_Center'], ['Business_Unit'], or ['Level_1']. See query_payload_examples_org_hierarchy.json for example.",
+      "filters": "Optional. Can use memberSet (dimension members) or selectionConcept (boolean concepts like isManager).",
+      "timeIntervals": "Required. For year-end snapshots (2021-2025), use the start of the NEXT year (2026-01-01) with BACKWARD direction, YEAR interval, and intervalCount 5. This gives year-end snapshots for each year. For point-in-time queries, use DAY interval with count 1. Must include either 'fromDateTime', 'fromInstant', or 'dynamicDateFrom'.",
+      "options": "zeroVisibility and nullVisibility set to ELIMINATE remove zero/null rows. alignTimeAxisToPeriodEnd aligns timestamps to period end (e.g., 2024-12-31T23:59:59.999Z)."
+    },
+    "switching_to_org_hierarchy": {
+      "comment": "To switch from Country_Cost to Organization_Hierarchy, see query_payload_examples_org_hierarchy.json",
+      "key_changes": {
+        "dimension_name": "Country_Cost -> Organization_Hierarchy",
+        "levelIds": "['Country'] -> ['Profit_Center'] (tenant-specific - verify with Dimensions API)",
+        "qualifyingPath": "Usually stays 'Employee' for both"
+      }
+    }
+}

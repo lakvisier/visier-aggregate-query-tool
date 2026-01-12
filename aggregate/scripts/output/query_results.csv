@@ -1,0 +1,51 @@
+Measures,DateInRange,Country_Cost,value,support
+employeeCount,2021-12-31T23:59:59.999Z - [0],Argentina,86.0,86
+employeeCount,2021-12-31T23:59:59.999Z - [0],Australia,205.0,205
+employeeCount,2021-12-31T23:59:59.999Z - [0],Brazil,281.0,281
+employeeCount,2021-12-31T23:59:59.999Z - [0],Canada,260.0,260
+employeeCount,2021-12-31T23:59:59.999Z - [0],Japan,396.0,396
+employeeCount,2021-12-31T23:59:59.999Z - [0],Poland,124.0,124
+employeeCount,2021-12-31T23:59:59.999Z - [0],South Africa,22.0,22
+employeeCount,2021-12-31T23:59:59.999Z - [0],Spain,127.0,127
+employeeCount,2021-12-31T23:59:59.999Z - [0],United Kingdom,251.0,251
+employeeCount,2021-12-31T23:59:59.999Z - [0],United States,1316.0,1316
+employeeCount,2022-12-31T23:59:59.999Z - [1],Argentina,89.0,89
+employeeCount,2022-12-31T23:59:59.999Z - [1],Australia,218.0,218
+employeeCount,2022-12-31T23:59:59.999Z - [1],Brazil,308.0,308
+employeeCount,2022-12-31T23:59:59.999Z - [1],Canada,270.0,270
+employeeCount,2022-12-31T23:59:59.999Z - [1],Japan,397.0,397
+employeeCount,2022-12-31T23:59:59.999Z - [1],Poland,133.0,133
+employeeCount,2022-12-31T23:59:59.999Z - [1],South Africa,27.0,27
+employeeCount,2022-12-31T23:59:59.999Z - [1],Spain,148.0,148
+employeeCount,2022-12-31T23:59:59.999Z - [1],United Kingdom,288.0,288
+employeeCount,2022-12-31T23:59:59.999Z - [1],United States,1355.0,1355
+employeeCount,2023-12-31T23:59:59.999Z - [2],Argentina,98.0,98
+employeeCount,2023-12-31T23:59:59.999Z - [2],Australia,224.0,224
+employeeCount,2023-12-31T23:59:59.999Z - [2],Brazil,316.0,316
+employeeCount,2023-12-31T23:59:59.999Z - [2],Canada,296.0,296
+employeeCount,2023-12-31T23:59:59.999Z - [2],Japan,395.0,395
+employeeCount,2023-12-31T23:59:59.999Z - [2],Poland,146.0,146
+employeeCount,2023-12-31T23:59:59.999Z - [2],South Africa,40.0,40
+employeeCount,2023-12-31T23:59:59.999Z - [2],Spain,160.0,160
+employeeCount,2023-12-31T23:59:59.999Z - [2],United Kingdom,332.0,332
+employeeCount,2023-12-31T23:59:59.999Z - [2],United States,1396.0,1396
+employeeCount,2024-12-31T23:59:59.999Z - [3],Argentina,101.0,101
+employeeCount,2024-12-31T23:59:59.999Z - [3],Australia,227.0,227
+employeeCount,2024-12-31T23:59:59.999Z - [3],Brazil,319.0,319
+employeeCount,2024-12-31T23:59:59.999Z - [3],Canada,288.0,288
+employeeCount,2024-12-31T23:59:59.999Z - [3],Japan,386.0,386
+employeeCount,2024-12-31T23:59:59.999Z - [3],Poland,139.0,139
+employeeCount,2024-12-31T23:59:59.999Z - [3],South Africa,40.0,40
+employeeCount,2024-12-31T23:59:59.999Z - [3],Spain,150.0,150
+employeeCount,2024-12-31T23:59:59.999Z - [3],United Kingdom,345.0,345
+employeeCount,2024-12-31T23:59:59.999Z - [3],United States,1412.0,1412
+employeeCount,2025-12-31T23:59:59.999Z - [4],Argentina,100.0,100
+employeeCount,2025-12-31T23:59:59.999Z - [4],Australia,231.0,231
+employeeCount,2025-12-31T23:59:59.999Z - [4],Brazil,328.0,328
+employeeCount,2025-12-31T23:59:59.999Z - [4],Canada,305.0,305
+employeeCount,2025-12-31T23:59:59.999Z - [4],Japan,393.0,393
+employeeCount,2025-12-31T23:59:59.999Z - [4],Poland,141.0,141
+employeeCount,2025-12-31T23:59:59.999Z - [4],South Africa,54.0,54
+employeeCount,2025-12-31T23:59:59.999Z - [4],Spain,159.0,159
+employeeCount,2025-12-31T23:59:59.999Z - [4],United Kingdom,346.0,346
+employeeCount,2025-12-31T23:59:59.999Z - [4],United States,1444.0,1444

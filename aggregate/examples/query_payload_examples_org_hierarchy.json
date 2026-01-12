@@ -1,0 +1,96 @@
+{
+  "description": "Visier Aggregate Query Payload - Organization Hierarchy Example",
+  "endpoint": "POST /v1/data/query/aggregate",
+  "payload": {
+    "query": {
+      "source": {
+        "metric": "employeeCount"
+      },
+      "axes": [
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Organization_Hierarchy",
+              "qualifyingPath": "Employee"
+            },
+            "levelIds": ["Level_2"]
+          }
+        },
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Location",
+              "qualifyingPath": "Employee"
+            },
+            "levelIds": ["Location_0"]
+          }
+        },
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Country_Cost",
+              "qualifyingPath": "Employee"
+            },
+            "levelIds": ["Country"]
+          }
+        }
+      ],
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Employment_Type",
+              "qualifyingPath": "Employee"
+            },
+            "values": {
+              "included": [
+                {
+                  "path": ["Full-time shifts"]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "timeIntervals": {
+        "fromDateTime": "2025-11-28",
+        "intervalPeriodType": "YEAR",
+        "intervalCount": 5,
+        "direction": "BACKWARD"
+      }
+    },
+    "options": {
+      "calendarType": "TENANT_CALENDAR",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      "internal": {
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  },
+  "notes": {
+    "axes": "At least one axis (dimension) is required. Time dimension typically doesn't need qualifyingPath.",
+    "parent_child_hierarchies": "Organization_Hierarchy is a parent-child hierarchy. You MUST specify actual level IDs that exist in your tenant. VALIDATED for this tenant: 'Level_1' (rollup), 'Level_2' (10 orgs - recommended), 'Level_3' (57 detailed orgs). Use discover_dimension_levels.py to find level IDs for your tenant.",
+    "levelled_dimensions": "For levelled dimensions (like Country_Cost), specify level IDs. Common patterns: use the dimension name itself (e.g., 'Country_Cost'), or level IDs like 'Level_1', 'Level_2'. For parent-child dimensions, level IDs are tenant-specific - use the Data Model API to discover available levels.",
+    "filters": "Optional. Can use memberSet (dimension members) or selectionConcept (boolean concepts like isManager).",
+    "timeIntervals": "Required. For year-end snapshots (2021-2025), use the start of the NEXT year (2026-01-01) with BACKWARD direction, YEAR interval, and intervalCount 5. This gives year-end snapshots for each year. For point-in-time queries, use DAY interval with count 1. Must include either 'fromDateTime', 'fromInstant', or 'dynamicDateFrom'.",
+    "options": "zeroVisibility and nullVisibility set to ELIMINATE remove zero/null rows. alignTimeAxisToPeriodEnd aligns timestamps to period end (e.g., 2024-12-31T23:59:59.999Z)."
+  },
+  "switching_guide": {
+    "from_country_cost_to_org_hierarchy": {
+      "step_1": "Replace dimension name: 'Country_Cost' -> 'Organization_Hierarchy'",
+      "step_2": "Replace levelIds: ['Country'] -> ['Profit_Center'] (or your tenant's actual level ID)",
+      "step_3": "Keep qualifyingPath: 'Employee' (usually same for both)",
+      "step_4": "Verify level ID exists in your tenant using Dimensions API",
+      "validated_level_ids": [
+        "Level_1 - Rollup/total (1 row)",
+        "Level_2 - Top level organizations (10 rows) - RECOMMENDED",
+        "Level_3 - Detailed organizations (57 rows)"
+      ],
+      "failed_level_ids": [
+        "Organization_Hierarchy - Does not work (dimension name itself)"
+      ],
+      "discovery_method": "Use Dimensions API: GET /v1/data/model/dimensions/Organization_Hierarchy/levels to find available level IDs"
+    }
+  }
+}

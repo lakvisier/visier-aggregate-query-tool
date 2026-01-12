@@ -1,0 +1,167 @@
+{
+  "description": "Template for creating your own query payloads - Copy this file and modify as needed",
+  "endpoint": "POST /v1/data/query/aggregate",
+  "payload": {
+    "query": {
+      "source": {
+        "metric": "employeeCount"
+      },
+      "axes": [
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Country_Cost",
+              "qualifyingPath": "Employee"
+            },
+            "levelIds": ["Country"]
+          }
+        }
+      ],
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Employment_Type",
+              "qualifyingPath": "Employee"
+            },
+            "values": {
+              "included": [
+                {
+                  "path": ["Full-time shifts"]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "timeIntervals": {
+        "fromDateTime": "2025-01-01",
+        "intervalPeriodType": "YEAR",
+        "intervalCount": 5,
+        "direction": "BACKWARD"
+      }
+    },
+    "options": {
+      "calendarType": "TENANT_CALENDAR",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      "internal": {
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  },
+  "customization_guide": {
+    "metric": {
+      "description": "Change 'employeeCount' to any metric available in your tenant",
+      "examples": ["employeeCount", "headcount", "turnover"],
+      "note": "Check your API schema URL for available metrics"
+    },
+    "axes": {
+      "description": "Add or modify dimensions to group your data by",
+      "common_dimensions": {
+        "Country_Cost": {
+          "levelIds": ["Country", "Region", "State"],
+          "note": "Use Country for country-level, Region for regional, etc."
+        },
+        "Function": {
+          "levelIds": ["Function"],
+          "note": "Job functions like Engineering, Sales, HR"
+        },
+        "Organization_Hierarchy": {
+          "levelIds": ["Level_1", "Level_2", "Level_3", "Profit_Center", "Business_Unit"],
+          "note": "Level IDs are tenant-specific. Use discover_dimension_levels.py to find yours"
+        },
+        "Location": {
+          "levelIds": ["Location_0"],
+          "note": "Physical office locations"
+        }
+      },
+      "adding_multiple_dimensions": "Add more objects to the 'axes' array to group by multiple dimensions"
+    },
+    "filters": {
+      "description": "Optional filters to narrow down your data",
+      "member_set_filter": {
+        "description": "Filter by specific dimension members",
+        "example": "Only include certain countries or functions"
+      },
+      "selection_concept_filter": {
+        "description": "Filter by boolean concepts",
+        "examples": [
+          {
+            "selectionConcept": {
+              "name": "isManager",
+              "qualifyingPath": "Employee"
+            }
+          },
+          {
+            "selectionConcept": {
+              "name": "isActive",
+              "qualifyingPath": "Employee"
+            }
+          }
+        ]
+      },
+      "note": "You can have multiple filters - they work as AND conditions"
+    },
+    "timeIntervals": {
+      "description": "Define the time period for your query",
+      "common_patterns": {
+        "year_end_snapshots": {
+          "fromDateTime": "2025-01-01",
+          "intervalPeriodType": "YEAR",
+          "intervalCount": 5,
+          "direction": "BACKWARD",
+          "result": "Gets year-end data for 2020-2024"
+        },
+        "monthly_data": {
+          "fromDateTime": "2025-01-01",
+          "intervalPeriodType": "MONTH",
+          "intervalCount": 12,
+          "direction": "BACKWARD",
+          "result": "Gets monthly data for last 12 months"
+        },
+        "quarterly_data": {
+          "fromDateTime": "2025-01-01",
+          "intervalPeriodType": "QUARTER",
+          "intervalCount": 4,
+          "direction": "BACKWARD",
+          "result": "Gets quarterly data for last 4 quarters"
+        },
+        "point_in_time": {
+          "fromDateTime": "2025-01-01",
+          "intervalPeriodType": "DAY",
+          "intervalCount": 1,
+          "direction": "BACKWARD",
+          "result": "Gets data for a specific point in time"
+        }
+      }
+    },
+    "options": {
+      "zeroVisibility": {
+        "ELIMINATE": "Remove rows with zero values",
+        "SHOW": "Include rows with zero values"
+      },
+      "nullVisibility": {
+        "ELIMINATE": "Remove rows with null values",
+        "SHOW": "Include rows with null values"
+      },
+      "alignTimeAxisToPeriodEnd": {
+        "true": "Align timestamps to period end (e.g., 2024-12-31T23:59:59.999Z)",
+        "false": "Use period start timestamps"
+      }
+    }
+  },
+  "quick_reference": {
+    "required_fields": [
+      "payload.query.source.metric",
+      "payload.query.axes (at least one)",
+      "payload.query.timeIntervals"
+    ],
+    "optional_fields": [
+      "payload.query.filters",
+      "payload.options"
+    ],
+    "validation": "Run with --validate-only to check your payload before executing",
+    "examples": "See query_payload_examples.json and query_payload_examples_org_hierarchy.json for working examples"
+  }
+}
