@@ -78,9 +78,37 @@ A query payload is a JSON file that defines:
 │   ├── query_payload_examples.json              # Basic example
 │   ├── query_payload_examples_org_hierarchy.json # Organization hierarchy example
 │   ├── query_payload_template.json              # Template with extensive comments
-│   └── example_usage.py                         # Programmatic usage examples
-├── QUICK_REFERENCE.md    # Quick reference guide
+│   ├── example_usage.py                         # Programmatic usage examples
+│   └── org_hierarchy_query.ipynb                # Jupyter notebook tutorial
+├── openapi.json         # Official Visier API OpenAPI specification
+├── API_REFERENCE.md     # Complete API reference (based on OpenAPI spec)
+├── QUICK_REFERENCE.md   # Quick reference guide
 └── output/              # Query results (CSV files)
+```
+
+## 📓 Jupyter Notebook
+
+For interactive analysis and visualization, use the Jupyter notebook:
+
+```bash
+# Install Jupyter (if not already installed)
+pip install jupyter matplotlib seaborn
+
+# Launch Jupyter
+jupyter notebook examples/org_hierarchy_query.ipynb
+```
+
+The notebook includes:
+- Step-by-step query execution using the org hierarchy payload
+- Data exploration and visualization
+- Time series analysis
+- Multi-dimensional analysis (Organization × Location, Organization × Country)
+- Interactive charts and heatmaps
+- Customizable examples
+
+**Note**: The notebook uses `matplotlib` and `seaborn` for visualizations. Install them with:
+```bash
+pip install matplotlib seaborn
 ```
 
 ## 💻 Programmatic Usage
@@ -202,12 +230,20 @@ Common dimensions:
 - **`setup.py`**: Interactive credential configuration.
 - **`examples/`**: Example payloads showing different query patterns.
 
+## 📚 Documentation
+
+- **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
+- **QUICK_REFERENCE.md** - Quick reference guide with common patterns
+- **examples/org_hierarchy_query.ipynb** - Interactive Jupyter notebook tutorial
+- **openapi.json** - Full OpenAPI 3.0 specification for all Visier APIs
+
 ## 🤝 Getting Help
 
 1. Check the examples in `examples/` directory
 2. Use `--validate-only` to test payloads without executing
 3. Use `--verbose` to see detailed execution information
-4. Contact your Visier administrator for metric/dimension availability
+4. See `API_REFERENCE.md` for complete API documentation
+5. Contact your Visier administrator for metric/dimension availability
 
 ## 📄 License
 

@@ -146,3 +146,10 @@ python query.py --payload my_query.json --output results.csv
 3. Validate with `--validate-only`
 4. Execute and review results
 5. Iterate and refine
+
+## Full Documentation
+
+- **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
+- **openapi.json** - Full OpenAPI 3.0 specification for all Visier APIs
+- **README.md** - Getting started guide and full documentation
+- **examples/org_hierarchy_query.ipynb** - Interactive tutorial
