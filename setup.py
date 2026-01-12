@@ -175,6 +175,18 @@ def setup_credentials_interactive():
     if tenant_code:
         credentials["VISIER_TENANT_CODE"] = tenant_code
     
+    # SSL verification setting
+    print()
+    print_info("SSL Certificate Verification")
+    print_info("If you're behind a corporate proxy/firewall that uses self-signed certificates,")
+    print_info("you may need to disable SSL verification.")
+    default_verify = existing_values.get("VISIER_VERIFY_SSL", "true")
+    verify_ssl = get_input("Verify SSL certificates? (true/false)", default_verify)
+    if verify_ssl.lower() in ("false", "0", "no", "off"):
+        credentials["VISIER_VERIFY_SSL"] = "false"
+    else:
+        credentials["VISIER_VERIFY_SSL"] = "true"
+    
     # Write to .env file
     print_header("Saving Credentials")
     try:

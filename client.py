@@ -31,12 +31,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def get_api_config() -> Dict[str, str]:
+def get_api_config() -> Dict[str, Any]:
     """
     Get API configuration from environment variables.
     
     Returns:
-        Dictionary with host, apikey, vanity, username, password
+        Dictionary with host, apikey, vanity, username, password, verify_ssl
     """
     required_vars = [
         "VISIER_HOST",
@@ -60,6 +60,11 @@ def get_api_config() -> Dict[str, str]:
             f"Missing required environment variables: {', '.join(missing)}\n"
             f"Please set these in your .env file. See visier.env.example for a template."
         )
+    
+    # SSL verification setting (defaults to True for security)
+    # Set VISIER_VERIFY_SSL=false to disable SSL verification (for corporate proxies)
+    verify_ssl = os.getenv("VISIER_VERIFY_SSL", "true").lower()
+    config["verify_ssl"] = verify_ssl in ("true", "1", "yes", "on")
     
     return config
 
@@ -350,11 +355,14 @@ def get_asid_token(config: Optional[Dict[str, str]] = None) -> str:
         params["vanity"] = vanity
     
     # Make the token request
+    # Use SSL verification setting from config (for corporate proxy environments)
+    verify_ssl = config.get("verify_ssl", True)
     response = requests.post(
         url,
         headers=headers,
         data=form_data,  # Form-encoded data
-        params=params
+        params=params,
+        verify=verify_ssl
     )
     
     # Check for errors
@@ -527,12 +535,15 @@ def execute_vanilla_aggregate_query(
         params["vanity"] = vanity
     
     # Make the request
+    # Use SSL verification setting from config (for corporate proxy environments)
+    verify_ssl = config.get("verify_ssl", True)
     response = requests.post(
         url,
         json=query_payload,  # requests will automatically JSON-encode this
         headers=headers,
         cookies=cookies,  # ASID token as cookie (Postman pattern)
-        params=params
+        params=params,
+        verify=verify_ssl
     )
     
     # Check for errors

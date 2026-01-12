@@ -192,6 +192,16 @@ Run `python query.py --setup` to configure your credentials.
 - Re-run `python query.py --setup` to update credentials
 - Verify your API key and credentials are correct
 
+### "SSL: CERTIFICATE_VERIFY_FAILED" or "self-signed certificate in certificate chain"
+This error occurs when you're behind a corporate proxy/firewall that intercepts HTTPS connections with a self-signed certificate.
+
+**Solution**: Add this to your `.env` file:
+```
+VISIER_VERIFY_SSL=false
+```
+
+**Note**: Disabling SSL verification reduces security. Only use this in trusted corporate environments. You can also set this during setup by running `python query.py --setup` and answering "false" when asked about SSL verification.
+
 ## 📝 Creating Your Own Queries
 
 1. **Start with a template**: Copy `examples/query_payload_template.json` (it has detailed comments)
