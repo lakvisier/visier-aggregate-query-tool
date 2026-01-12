@@ -16,13 +16,13 @@ Use these examples with the main client script:
 
 ```bash
 # Run with basic example
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+python run_aggregate_query.py --payload examples/query_payload_examples.json
 
 # Run with organization hierarchy example
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples_org_hierarchy.json
+python run_aggregate_query.py --payload examples/query_payload_examples_org_hierarchy.json
 
 # Validate before running
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
+python run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
 ```
 
 ### For Developers
@@ -31,7 +31,7 @@ Use with the advanced script:
 
 ```bash
 # Run with basic example
-python aggregate/scripts/run_query.py --file aggregate/examples/query_payload_examples.json
+python scripts/run_query.py --file examples/query_payload_examples.json
 ```
 
 ## Creating Your Own Payload
@@ -55,4 +55,4 @@ Edit the JSON files to customize:
 - **Template Guide**: See `query_payload_template.json` for detailed customization instructions
 - **Complete Guide**: See `CLIENT_WALKTHROUGH.md` for step-by-step instructions
 - **Quick Reference**: See `QUICK_START.md` for common commands
-- **Patterns**: See `aggregate/docs/LEARNINGS.md` for detailed patterns and examples
+- **Patterns**: See `docs/LEARNINGS.md` for detailed patterns and examples

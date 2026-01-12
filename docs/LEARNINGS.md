@@ -399,13 +399,13 @@ Columns: Measures, DateInRange, Country_Cost, value, support
 **Method 1: Use the Discovery Script (RECOMMENDED)**
 ```bash
 # Discover levels for Organization_Hierarchy
-python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy
+python scripts/discover_dimension_levels.py Organization_Hierarchy
 
 # Get only level IDs (for scripting)
-python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy --level-ids-only
+python scripts/discover_dimension_levels.py Organization_Hierarchy --level-ids-only
 
 # Use v2alpha API (includes more details)
-python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy --api-version v2alpha
+python scripts/discover_dimension_levels.py Organization_Hierarchy --api-version v2alpha
 ```
 
 **Method 2: Dimensions API (Manual)**

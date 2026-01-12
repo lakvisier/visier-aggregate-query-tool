@@ -8,35 +8,35 @@ RESTful API-based aggregate queries for Visier Platform (no SDK dependencies).
 
 1. **[QUICK_START.md](QUICK_START.md)** - Get running in 5 minutes
 2. **[CLIENT_WALKTHROUGH.md](CLIENT_WALKTHROUGH.md)** - Complete step-by-step guide
-3. **Interactive Walkthrough**: `python aggregate/walkthrough.py`
+3. **Interactive Walkthrough**: `python walkthrough.py`
 
 ### Quick Commands
 
 ```bash
 # Setup credentials (first time)
-python aggregate/run_aggregate_query.py --setup
+python run_aggregate_query.py --setup
 
 # Run your first query
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+python run_aggregate_query.py --payload examples/query_payload_examples.json
 
 # Interactive walkthrough
-python aggregate/walkthrough.py
+python walkthrough.py
 ```
 
 ## Developer Quick Start
 
 ```bash
 # Run query with default example
-python aggregate/scripts/run_query.py
+python scripts/run_query.py
 
 # Run with custom payload
-python aggregate/scripts/run_query.py --file aggregate/examples/query_payload_examples.json
+python scripts/run_query.py --file examples/query_payload_examples.json
 ```
 
 ## Structure
 
 ```
-aggregate/
+.
 ├── run_aggregate_query.py         # 🎯 Main client script (START HERE)
 ├── setup_credentials.py           # Interactive credential setup
 ├── walkthrough.py                 # Interactive first-time guide
@@ -79,7 +79,7 @@ aggregate/
 ## Usage in Python
 
 ```python
-from aggregate.aggregate_query_vanilla import (
+from aggregate_query_vanilla import (
     execute_vanilla_aggregate_query,
     convert_vanilla_response_to_dataframe,
     create_dimension_axis

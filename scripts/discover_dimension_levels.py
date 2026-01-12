@@ -8,16 +8,16 @@ like Organization_Hierarchy where level IDs are tenant-specific.
 
 Usage:
     # Discover levels for Organization_Hierarchy
-    python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy
+    python scripts/discover_dimension_levels.py Organization_Hierarchy
     
     # Discover levels for Country_Cost
-    python aggregate/scripts/discover_dimension_levels.py Country_Cost
+    python scripts/discover_dimension_levels.py Country_Cost
     
     # Use v2alpha API (includes more details)
-    python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy --api-version v2alpha
+    python scripts/discover_dimension_levels.py Organization_Hierarchy --api-version v2alpha
     
     # Get details for a specific analytic object
-    python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy --object-id Employee
+    python scripts/discover_dimension_levels.py Organization_Hierarchy --object-id Employee
 """
 
 import os
@@ -36,7 +36,7 @@ try:
     from aggregate_query_vanilla import get_api_config, get_asid_token
 except ImportError:
     # Fallback for package structure
-    from aggregate.aggregate_query_vanilla import get_api_config, get_asid_token
+    from aggregate_query_vanilla import get_api_config, get_asid_token
 
 
 def get_dimension_details_v1(

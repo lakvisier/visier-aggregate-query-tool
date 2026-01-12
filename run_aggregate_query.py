@@ -6,16 +6,16 @@ This is the main entry point for clients to run aggregate queries.
 
 Usage:
     # First time setup (creates .env file)
-    python aggregate/run_aggregate_query.py --setup
+    python run_aggregate_query.py --setup
 
     # Run a query with a JSON payload file
-    python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+    python run_aggregate_query.py --payload examples/query_payload_examples.json
 
     # Run with custom output file
-    python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json --output results.csv
+    python run_aggregate_query.py --payload examples/query_payload_examples.json --output results.csv
 
     # Validate payload without executing
-    python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
+    python run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
 
 For more help, see CLIENT_WALKTHROUGH.md
 """
@@ -184,7 +184,7 @@ def main():
     # Require payload file
     if not args.payload:
         print_error("Payload file is required. Use --payload <file> to specify a JSON payload file.")
-        print_info("Example: python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json")
+        print_info("Example: python run_aggregate_query.py --payload examples/query_payload_examples.json")
         parser.print_help()
         return 1
     

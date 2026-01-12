@@ -9,7 +9,7 @@ This script provides a step-by-step guide for first-time users to:
 4. Understand the results
 
 Usage:
-    python aggregate/walkthrough.py
+    python walkthrough.py
 """
 
 import os
@@ -90,7 +90,7 @@ def run_walkthrough():
                 from setup_credentials import setup_credentials_interactive
                 setup_credentials_interactive()
             except ImportError:
-                print_info("Run: python aggregate/setup_credentials.py")
+                print_info("Run: python setup_credentials.py")
     else:
         print_info("Credentials are not configured yet.")
         print_info("You'll need:")
@@ -110,7 +110,7 @@ def run_walkthrough():
                 from setup_credentials import setup_credentials_interactive
                 setup_credentials_interactive()
             except ImportError:
-                print_info("Run: python aggregate/setup_credentials.py")
+                print_info("Run: python setup_credentials.py")
                 wait_for_user()
     
     # Step 2: Understanding Payloads
@@ -197,10 +197,10 @@ def run_walkthrough():
             except Exception as e:
                 print(f"Error running query: {e}")
                 print_info("You can run it manually with:")
-                print(f"  python aggregate/run_aggregate_query.py --payload {example_file}")
+                print(f"  python run_aggregate_query.py --payload {example_file}")
         else:
             print_info("You can run queries manually with:")
-            print("  python aggregate/run_aggregate_query.py --payload <your-payload.json>")
+            print("  python run_aggregate_query.py --payload <your-payload.json>")
     else:
         print_info("Example file not found. You can create your own payload file.")
         print_info("See CLIENT_WALKTHROUGH.md for detailed instructions.")
@@ -241,7 +241,7 @@ United Kingdom,300
     print("2. Create your own payload files:")
     print("   • Copy an example file")
     print("   • Modify it for your needs")
-    print("   • Run: python aggregate/run_aggregate_query.py --payload <your-file.json>")
+    print("   • Run: python run_aggregate_query.py --payload <your-file.json>")
     print()
     print("3. Learn more:")
     print("   • Read CLIENT_WALKTHROUGH.md for detailed guide")
@@ -257,9 +257,9 @@ United Kingdom,300
     print_success("You're all set to start querying Visier data!")
     print()
     print("Quick command reference:")
-    print("  Setup:     python aggregate/run_aggregate_query.py --setup")
-    print("  Run query: python aggregate/run_aggregate_query.py --payload <file.json>")
-    print("  Validate:  python aggregate/run_aggregate_query.py --payload <file.json> --validate-only")
+    print("  Setup:     python run_aggregate_query.py --setup")
+    print("  Run query: python run_aggregate_query.py --payload <file.json>")
+    print("  Validate:  python run_aggregate_query.py --payload <file.json> --validate-only")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ Get up and running with Visier Aggregate Queries in 5 minutes.
 ## 1. Setup Credentials
 
 ```bash
-python aggregate/run_aggregate_query.py --setup
+python run_aggregate_query.py --setup
 ```
 
 Enter your API credentials when prompted. This creates a `.env` file.
@@ -13,7 +13,7 @@ Enter your API credentials when prompted. This creates a `.env` file.
 ## 2. Run Your First Query
 
 ```bash
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+python run_aggregate_query.py --payload examples/query_payload_examples.json
 ```
 
 Results are saved to `output/query_results.csv`.
@@ -30,7 +30,7 @@ Edit `examples/query_payload_examples.json`:
 ## 4. Validate Before Running
 
 ```bash
-python aggregate/run_aggregate_query.py --payload my_query.json --validate-only
+python run_aggregate_query.py --payload my_query.json --validate-only
 ```
 
 ## Common Commands
@@ -83,7 +83,7 @@ python aggregate/run_aggregate_query.py --payload my_query.json --validate-only
 ## Next Steps
 
 - **Full Guide**: See `CLIENT_WALKTHROUGH.md`
-- **Interactive Help**: Run `python aggregate/walkthrough.py`
+- **Interactive Help**: Run `python walkthrough.py`
 - **Examples**: Check `examples/` directory
 - **API Schema**: Use URL from your administrator
 

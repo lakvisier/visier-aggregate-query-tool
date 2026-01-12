@@ -1,5 +1,7 @@
 # Migration Guide: Extracting to Standalone Repository
 
+> **Note:** This migration has been completed. Files are now at the repository root level (not in an `aggregate/` folder). This guide is kept for historical reference.
+
 This guide helps you extract the aggregate folder into a standalone repository.
 
 ## Benefits of Separation

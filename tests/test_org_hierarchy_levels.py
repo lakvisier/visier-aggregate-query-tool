@@ -12,7 +12,7 @@ import json
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from aggregate.aggregate_query_vanilla import (
+from aggregate_query_vanilla import (
     execute_vanilla_aggregate_query,
     convert_vanilla_response_to_dataframe,
     get_api_config

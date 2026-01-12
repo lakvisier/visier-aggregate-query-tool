@@ -6,17 +6,17 @@ Easy workflow for running and debugging Visier aggregate queries.
 
 ```bash
 # Run with default payload file
-python aggregate/scripts/run_query.py
+python scripts/run_query.py
 
 # Run with custom payload file
-python aggregate/scripts/run_query.py --file aggregate/examples/query_payload_examples.json
+python scripts/run_query.py --file examples/query_payload_examples.json
 ```
 
 ## Workflow
 
 ### 1. Edit Your Query Payload
 
-Edit `aggregate/examples/query_payload_examples.json` to define your query:
+Edit `examples/query_payload_examples.json` to define your query:
 
 ```json
 {
@@ -35,34 +35,34 @@ Edit `aggregate/examples/query_payload_examples.json` to define your query:
 
 ```bash
 # Check if payload is valid (doesn't execute query)
-python aggregate/scripts/run_query.py --validate-only
+python scripts/run_query.py --validate-only
 ```
 
 ### 3. Run with Debug Info
 
 ```bash
 # See payload, config, and detailed execution steps
-python aggregate/scripts/run_query.py --debug
+python scripts/run_query.py --debug
 
 # Or just verbose output
-python aggregate/scripts/run_query.py --verbose
+python scripts/run_query.py --verbose
 ```
 
 ### 4. Save Results
 
 ```bash
 # Auto-saves to output/query_results.csv by default
-python aggregate/scripts/run_query.py
+python scripts/run_query.py
 
 # Or specify custom output file
-python aggregate/scripts/run_query.py --output my_results.csv
+python scripts/run_query.py --output my_results.csv
 ```
 
 ## Command Line Options
 
 | Option | Short | Description |
 |--------|-------|-------------|
-| `--file` | `-f` | Path to JSON payload file (default: `aggregate/examples/query_payload_examples.json`) |
+| `--file` | `-f` | Path to JSON payload file (default: `examples/query_payload_examples.json`) |
 | `--output` | `-o` | CSV file path to save results |
 | `--debug` | `-d` | Show payload, headers, and detailed execution info |
 | `--verbose` | `-v` | Show detailed execution steps |
@@ -76,30 +76,30 @@ python aggregate/scripts/run_query.py --output my_results.csv
 
 ```bash
 # Run query with default settings
-python aggregate/scripts/run_query.py
+python scripts/run_query.py
 ```
 
 ### Debugging
 
 ```bash
 # Full debug output
-python aggregate/scripts/run_query.py --debug
+python scripts/run_query.py --debug
 
 # Validate payload structure
-python aggregate/scripts/run_query.py --validate-only
+python scripts/run_query.py --validate-only
 
 # Save payload for inspection
-python aggregate/scripts/run_query.py --save-payload my_payload.json
+python scripts/run_query.py --save-payload my_payload.json
 ```
 
 ### Custom Files
 
 ```bash
 # Use different payload file
-python aggregate/scripts/run_query.py --file my_query.json
+python scripts/run_query.py --file my_query.json
 
 # Save to custom location
-python aggregate/scripts/run_query.py --output /path/to/results.csv
+python scripts/run_query.py --output /path/to/results.csv
 ```
 
 ## Discovering Dimension Levels
@@ -110,10 +110,10 @@ For parent-child hierarchies like `Organization_Hierarchy`, you need to discover
 
 ```bash
 # Discover levels for Organization_Hierarchy
-python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy
+python .scripts/discover_dimension_levels.py Organization_Hierarchy
 
 # Get only level IDs (for scripting)
-python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy --level-ids-only
+python .scripts/discover_dimension_levels.py Organization_Hierarchy --level-ids-only
 ```
 
 The script will suggest common level IDs to try. For parent-child hierarchies, you may need to test each level ID with a query to find the correct one.
@@ -158,7 +158,7 @@ If query succeeds but returns empty DataFrame:
 ## File Structure
 
 ```
-aggregate/
+.
 ├── aggregate_query_vanilla.py    # Core query functions
 ├── scripts/
 │   ├── run_query.py              # CLI runner (this tool)
@@ -177,14 +177,14 @@ aggregate/
 You can also use the functions directly in Python:
 
 ```python
-from aggregate.aggregate_query_vanilla import (
+from aggregate_query_vanilla import (
     execute_vanilla_aggregate_query,
     convert_vanilla_response_to_dataframe,
     load_query_payload_from_json
 )
 
 # Load and execute
-payload = load_query_payload_from_json("aggregate/examples/query_payload_examples.json")
+payload = load_query_payload_from_json("examples/query_payload_examples.json")
 response = execute_vanilla_aggregate_query(payload=payload)
 df = convert_vanilla_response_to_dataframe(response)
 ```

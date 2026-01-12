@@ -6,9 +6,9 @@ This script helps you set up your API credentials by creating or updating
 a .env file in the project root.
 
 Usage:
-    python aggregate/setup_credentials.py
+    python setup_credentials.py
     # or
-    python aggregate/run_aggregate_query.py --setup
+    python run_aggregate_query.py --setup
 """
 
 import os
@@ -217,7 +217,7 @@ def setup_credentials_interactive():
     print_success("You're ready to run queries!")
     print_info("Next steps:")
     print("  1. Edit a JSON payload file in examples/")
-    print("  2. Run: python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json")
+    print("  2. Run: python run_aggregate_query.py --payload examples/query_payload_examples.json")
 
 
 if __name__ == "__main__":

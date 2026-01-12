@@ -54,7 +54,7 @@ You have two options for setting up credentials:
 Run the interactive setup script:
 
 ```bash
-python aggregate/run_aggregate_query.py --setup
+python run_aggregate_query.py --setup
 ```
 
 This will guide you through entering your credentials and create a `.env` file automatically.
@@ -82,7 +82,7 @@ This will guide you through entering your credentials and create a `.env` file a
 Test your credentials by running the walkthrough:
 
 ```bash
-python aggregate/walkthrough.py
+python walkthrough.py
 ```
 
 This interactive guide will help you verify everything is set up correctly.
@@ -177,7 +177,7 @@ Time intervals define the time period:
 Start with the provided example:
 
 ```bash
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+python run_aggregate_query.py --payload examples/query_payload_examples.json
 ```
 
 This will:
@@ -191,7 +191,7 @@ This will:
 To check if your payload is valid without executing:
 
 ```bash
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
+python run_aggregate_query.py --payload examples/query_payload_examples.json --validate-only
 ```
 
 ### Step 3: View Results
@@ -437,7 +437,7 @@ Canada,Sales,50
 
 **Solution:** Run the setup script:
 ```bash
-python aggregate/run_aggregate_query.py --setup
+python run_aggregate_query.py --setup
 ```
 
 ### Issue: "Payload validation failed"
@@ -466,14 +466,14 @@ python aggregate/run_aggregate_query.py --setup
 2. Check dimension names match your tenant's schema
 3. For parent-child hierarchies, use the discovery script:
    ```bash
-   python aggregate/scripts/discover_dimension_levels.py Organization_Hierarchy
+   python scripts/discover_dimension_levels.py Organization_Hierarchy
    ```
 
 ### Issue: "API Error 401: Unauthorized"
 
 **Solution:**
 1. Verify credentials in `.env` file
-2. Re-run setup: `python aggregate/run_aggregate_query.py --setup`
+2. Re-run setup: `python run_aggregate_query.py --setup`
 3. Check with your administrator that credentials are still valid
 
 ### Issue: "Query returned no data"
@@ -513,22 +513,22 @@ Parent-child hierarchies require tenant-specific level IDs. Try:
 
 ```bash
 # Setup credentials
-python aggregate/run_aggregate_query.py --setup
+python run_aggregate_query.py --setup
 
 # Run interactive walkthrough
-python aggregate/walkthrough.py
+python walkthrough.py
 
 # Run a query
-python aggregate/run_aggregate_query.py --payload examples/query_payload_examples.json
+python run_aggregate_query.py --payload examples/query_payload_examples.json
 
 # Validate payload
-python aggregate/run_aggregate_query.py --payload my_query.json --validate-only
+python run_aggregate_query.py --payload my_query.json --validate-only
 
 # Run with verbose output
-python aggregate/run_aggregate_query.py --payload my_query.json --verbose
+python run_aggregate_query.py --payload my_query.json --verbose
 
 # Custom output file
-python aggregate/run_aggregate_query.py --payload my_query.json --output results.csv
+python run_aggregate_query.py --payload my_query.json --output results.csv
 ```
 
 ---

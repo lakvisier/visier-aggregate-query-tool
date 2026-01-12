@@ -5,7 +5,7 @@ This module provides a simple, RESTful API-based interface for querying
 aggregate metrics from Visier without SDK dependencies.
 
 Quick Start:
-    from aggregate.aggregate_query_vanilla import (
+    from aggregate_query_vanilla import (
         execute_vanilla_aggregate_query,
         convert_vanilla_response_to_dataframe,
         create_dimension_axis

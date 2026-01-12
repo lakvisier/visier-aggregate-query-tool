@@ -9,7 +9,7 @@ Core functions:
     - Helper functions for building queries (create_dimension_axis, create_member_set_filter, etc.)
 
 Usage:
-    from aggregate.aggregate_query_vanilla import (
+    from aggregate_query_vanilla import (
         execute_vanilla_aggregate_query,
         convert_vanilla_response_to_dataframe,
         create_dimension_axis

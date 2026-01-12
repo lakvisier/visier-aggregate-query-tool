@@ -6,22 +6,22 @@ Simple CLI tool for running and debugging aggregate queries.
 
 Usage:
     # Run with default payload file
-    python aggregate/scripts/run_query.py
+    python scripts/run_query.py
     
     # Run with custom payload file
-    python aggregate/scripts/run_query.py --file aggregate/examples/query_payload_examples.json
+    python scripts/run_query.py --file examples/query_payload_examples.json
     
     # Debug mode (shows payload, headers, etc.)
-    python aggregate/scripts/run_query.py --debug
+    python scripts/run_query.py --debug
     
     # Verbose mode (shows detailed execution steps)
-    python aggregate/scripts/run_query.py --verbose
+    python scripts/run_query.py --verbose
     
     # Save payload to file before sending (for inspection)
-    python aggregate/scripts/run_query.py --save-payload payload.json
+    python scripts/run_query.py --save-payload payload.json
     
     # Validate payload without executing
-    python aggregate/scripts/run_query.py --validate-only
+    python scripts/run_query.py --validate-only
 """
 
 import os
@@ -33,7 +33,7 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from aggregate.aggregate_query_vanilla import (
+from aggregate_query_vanilla import (
     execute_vanilla_aggregate_query,
     convert_vanilla_response_to_dataframe,
     load_query_payload_from_json,
@@ -129,7 +129,7 @@ def main():
         "--file", "-f",
         type=str,
         default=None,
-        help="Path to JSON file containing the query payload (default: aggregate/examples/query_payload_examples.json)"
+        help="Path to JSON file containing the query payload (default: examples/query_payload_examples.json)"
     )
     parser.add_argument(
         "--output", "-o",
