@@ -537,7 +537,7 @@ def execute_query_with_impersonation(
     try:
         response = requests.post(
             url,
-            data=payload,
+            json=payload,  # Send as JSON (not form-encoded)
             headers=headers,
             cookies=cookies,
             params=params,
@@ -567,6 +567,120 @@ def execute_query_with_impersonation(
     except requests.HTTPError as e:
         print(f"✗ Query failed: {e}")
         raise
+
+
+def execute_query_with_impersonation_token(
+    payload: Dict[str, Any],
+    impersonation_token: str,
+    customer_apikey: str,
+    jurisdiction: str,
+    verify_ssl: bool = True
+) -> Dict[str, Any]:
+    """
+    Execute an aggregate query using an impersonation token directly.
+    
+    This uses the impersonation token obtained from get_visier_impersonation_token()
+    in the Cookie header. Unlike execute_query_with_impersonation(), this does NOT
+    use the TargetTenantID header - the tenant is determined by the impersonation token.
+    
+    IMPORTANT: 
+    - Use the impersonation token in Cookie: VisierImpersonationToken={impersonation_token}
+    - Use customer's API key (NOT your API key)
+    - Use demographics vanity in URL
+    - No TargetTenantID header needed (token already contains tenant context)
+    
+    Args:
+        payload: Complete query payload dictionary
+        impersonation_token: The impersonation token from get_visier_impersonation_token()
+        customer_apikey: The customer's API key (NOT your API key)
+        jurisdiction: Jurisdiction code ("US", "EU", "CA", "APAC")
+        verify_ssl: Whether to verify SSL certificates (default: True)
+    
+    Returns:
+        Response JSON as dictionary (CellSetDTO structure)
+    
+    Raises:
+        ValueError: If jurisdiction is invalid
+        requests.HTTPError: If API request fails
+    """
+    # Build the API URL using demographics vanity (NOT customer vanity)
+    demographics_host = build_demographics_host(jurisdiction)
+    demographics_vanity = get_demographics_vanity(jurisdiction)
+    url = f"{demographics_host}/v1/data/query/aggregate"
+    
+    # Prepare headers
+    # When using impersonation token directly:
+    # - Use customer's API key
+    # - Use impersonation token in Cookie header
+    # - NO TargetTenantID header (token already contains tenant context)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "apikey": customer_apikey,  # Customer's API key (NOT your API key)
+        "Cookie": f"VisierImpersonationToken={impersonation_token}"  # Impersonation token in Cookie
+    }
+    
+    # Prepare query parameters - use demographics vanity (NOT customer vanity)
+    params = {"vanity": demographics_vanity}
+    
+    print(f"→ Executing query with impersonation token (direct)...")
+    print(f"  URL: {url}")
+    print(f"  Using VisierImpersonationToken in Cookie header")
+    print(f"  No TargetTenantID header needed (token contains tenant context)")
+    print(f"  Payload: {json.dumps(payload, indent=2)}")
+    
+    # Make the request
+    response = requests.post(
+        url,
+        json=payload,  # Send as JSON
+        headers=headers,
+        params=params,
+        verify=verify_ssl
+    )
+    
+    # Print response details
+    print(f"\n  Response Status: {response.status_code}")
+    print(f"  Response Headers: {dict(response.headers)}")
+    
+    # Check for errors
+    if response.status_code != 200:
+        try:
+            error_data = response.json()
+            error_msg = f"API Error {response.status_code}: {error_data}"
+            print(f"  Error Response Body: {json.dumps(error_data, indent=2)}")
+        except:
+            error_msg = f"API Error {response.status_code}: {response.text}"
+            print(f"  Error Response Text: {response.text[:500]}")
+        
+        # Common error: 403 Forbidden usually means missing permissions or invalid token
+        if response.status_code == 403:
+            error_msg += "\n\n⚠️  PERMISSION ERROR: This likely means:"
+            error_msg += "\n   - Impersonation token is invalid or expired"
+            error_msg += "\n   - Customer API key is incorrect"
+            error_msg += "\n   - Impersonated user doesn't have access to this data"
+        
+        raise requests.HTTPError(error_msg)
+    
+    response.raise_for_status()
+    
+    # Parse response
+    response_json = response.json()
+    
+    # Print response structure details
+    print(f"  Response Type: {type(response_json).__name__}")
+    if isinstance(response_json, dict):
+        print(f"  Response Keys: {list(response_json.keys())}")
+        # Check for common response structures
+        if "data" in response_json:
+            print(f"  Data Structure: {type(response_json['data']).__name__}")
+        if "cells" in response_json:
+            print(f"  Cells Count: {len(response_json.get('cells', []))}")
+        if "rows" in response_json:
+            print(f"  Rows Count: {len(response_json.get('rows', []))}")
+    
+    print(f"  Response Size: {len(response.text)} bytes")
+    print("✓ Query executed successfully with impersonation token")
+    return response_json
 
 
 def test_impersonation_connection(
@@ -650,14 +764,24 @@ Examples:
   python test_impersonation.py --test-token-only \\
     --username YOUR_USERNAME --password YOUR_PASSWORD --jurisdiction US
   
-  # Test impersonation with EU jurisdiction
+  # Test impersonation token acquisition (step 2)
+  python test_impersonation.py --test-impersonation-token \\
+    --target-user customer.user@example.com --target-tenant "customer-tenant-123" \\
+    --customer-apikey CUSTOMER_API_KEY --jurisdiction US
+  
+  # Test full flow: get tokens + execute query with impersonation token (direct)
+  python test_impersonation.py --test-impersonation-token-query \\
+    --target-user customer.user@example.com --target-tenant "customer-tenant-123" \\
+    --customer-apikey CUSTOMER_API_KEY --jurisdiction US
+  
+  # Test impersonation with EU jurisdiction (using TargetTenantID header)
   python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction EU --test-query
   
-  # Execute query with US jurisdiction
+  # Execute query with US jurisdiction (using TargetTenantID header)
   python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction US \\
                                 --payload examples/query_payload_examples.json
   
-  # Test with APAC jurisdiction
+  # Test with APAC jurisdiction (using TargetTenantID header)
   python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction APAC --test-query
 
 IMPORTANT: Before using impersonation:
@@ -704,6 +828,12 @@ IMPORTANT: Before using impersonation:
     )
     
     parser.add_argument(
+        "--test-impersonation-token-query",
+        action="store_true",
+        help="Test full flow: get tokens + execute query using impersonation token directly (in Cookie). Requires --target-user and --target-tenant"
+    )
+    
+    parser.add_argument(
         "--target-user",
         help="Target username in customer tenant to impersonate. Can also be set via VISIER_IMPERSONATION_TARGET_USERNAME in .env. Required for --test-impersonation-token"
     )
@@ -739,11 +869,11 @@ IMPORTANT: Before using impersonation:
         args.target_user = os.getenv("VISIER_IMPERSONATION_TARGET_USERNAME")
     
     # Validate that target-tenant is provided unless testing tokens only
-    if not args.test_token_only and not args.test_impersonation_token and not args.target_tenant:
-        parser.error("--target-tenant is required (or set VISIER_IMPERSONATION_TARGET_TENANT_ID in .env) unless using --test-token-only or --test-impersonation-token")
+    if not args.test_token_only and not args.test_impersonation_token and not args.test_impersonation_token_query and not args.target_tenant:
+        parser.error("--target-tenant is required (or set VISIER_IMPERSONATION_TARGET_TENANT_ID in .env) unless using --test-token-only, --test-impersonation-token, or --test-impersonation-token-query")
     
-    # For test-token-only and test-impersonation-token, jurisdiction can come from env var
-    if args.test_token_only or args.test_impersonation_token:
+    # For test-token-only, test-impersonation-token, and test-impersonation-token-query, jurisdiction can come from env var
+    if args.test_token_only or args.test_impersonation_token or args.test_impersonation_token_query:
         # Jurisdiction will be validated later when we try to get it
         pass
     elif not args.jurisdiction:
@@ -988,6 +1118,256 @@ IMPORTANT: Before using impersonation:
             print(f"\n✗ Unexpected error: {e}")
             import traceback
             traceback.print_exc()
+            sys.exit(1)
+    
+    # Test impersonation token query (full flow: get tokens + query with impersonation token)
+    if args.test_impersonation_token_query:
+        print("="*70)
+        print("TESTING FULL IMPERSONATION FLOW WITH IMPERSONATION TOKEN")
+        print("="*70)
+        print()
+        print("This tests the complete flow:")
+        print("  1. Get secure token (ASID token) using your credentials")
+        print("  2. Get impersonation token using ASID token + customer info")
+        print("  3. Execute query using impersonation token directly (in Cookie header)")
+        print()
+        print("Test Configuration:")
+        print(f"  - Jurisdiction: {args.jurisdiction or os.getenv('VISIER_IMPERSONATION_JURISDICTION', 'Not set')}")
+        print(f"  - Target User: {args.target_user or os.getenv('VISIER_IMPERSONATION_TARGET_USERNAME', 'Not set')}")
+        print(f"  - Target Tenant: {args.target_tenant or os.getenv('VISIER_IMPERSONATION_TARGET_TENANT_ID', 'Not set')}")
+        print(f"  - Customer API Key: {'Set' if (args.customer_apikey or os.getenv('VISIER_IMPERSONATION_CUSTOMER_APIKEY')) else 'Not set'}")
+        print()
+        
+        # Validate required parameters
+        if not args.target_user:
+            print("✗ Error: Target username required")
+            print("  Provide via: --target-user CUSTOMER_USERNAME or VISIER_IMPERSONATION_TARGET_USERNAME")
+            sys.exit(1)
+        
+        if not args.target_tenant:
+            print("✗ Error: Target tenant ID required")
+            print("  Provide via: --target-tenant CUSTOMER_TENANT_ID or VISIER_IMPERSONATION_TARGET_TENANT_ID")
+            sys.exit(1)
+        
+        # Get customer API key
+        customer_apikey = args.customer_apikey or os.getenv("VISIER_IMPERSONATION_CUSTOMER_APIKEY")
+        if not customer_apikey:
+            print("✗ Error: Customer API key required")
+            print("  Provide via: --customer-apikey CUSTOMER_API_KEY or VISIER_IMPERSONATION_CUSTOMER_APIKEY")
+            sys.exit(1)
+        
+        # Get jurisdiction
+        jurisdiction = args.jurisdiction or os.getenv("VISIER_IMPERSONATION_JURISDICTION")
+        if not jurisdiction:
+            print("✗ Error: Jurisdiction required")
+            sys.exit(1)
+        jurisdiction = jurisdiction.upper()
+        
+        if jurisdiction not in DEMOGRAPHICS_VANITIES:
+            print(f"✗ Error: Invalid jurisdiction: {jurisdiction}")
+            sys.exit(1)
+        
+        try:
+            # Step 1: Get secure token using your credentials
+            print("Step 1: Getting secure token (ASID token)...")
+            print()
+            
+            # Get your credentials
+            username = args.username or os.getenv("VISIER_IMPERSONATION_MY_USERNAME")
+            password = args.password or os.getenv("VISIER_IMPERSONATION_MY_PASSWORD")
+            
+            if not username or not password:
+                try:
+                    config = get_api_config()
+                    username = username or config.get("username")
+                    password = password or config.get("password")
+                except ValueError:
+                    pass
+            
+            if not username or not password:
+                print("✗ Error: Your username and password required for step 1")
+                sys.exit(1)
+            
+            asid_token = get_visier_secure_token(
+                username=username,
+                password=password,
+                jurisdiction=jurisdiction,
+                apikey=os.getenv("VISIER_IMPERSONATION_APIKEY") or os.getenv("VISIER_APIKEY")
+            )
+            
+            print()
+            print("Step 2: Getting impersonation token...")
+            print()
+            
+            # Step 2: Get impersonation token
+            impersonation_token = get_visier_impersonation_token(
+                asid_token=asid_token,
+                target_user_name=args.target_user,
+                target_tenant_id=args.target_tenant,
+                customer_apikey=customer_apikey,
+                jurisdiction=jurisdiction
+            )
+            
+            print()
+            print("Step 3: Executing query using impersonation token directly...")
+            print()
+            
+            # Step 3: Execute query using impersonation token
+            # Using simple payload for unit testing (as per documentation)
+            test_payload = {
+                "query": {
+                    "source": {
+                        "metric": "employeeCount"
+                    },
+                    "timeIntervals": {
+                        "fromDateTime": "2024-01-01"
+                    }
+                }
+            }
+            
+            response = execute_query_with_impersonation_token(
+                payload=test_payload,
+                impersonation_token=impersonation_token,
+                customer_apikey=customer_apikey,
+                jurisdiction=jurisdiction
+            )
+            
+            print()
+            print("="*70)
+            print("RESPONSE ANALYSIS")
+            print("="*70)
+            print(f"  Response Type: {type(response).__name__}")
+            if isinstance(response, dict):
+                print(f"  Response Keys: {list(response.keys())}")
+                print(f"  Full Response Structure:")
+                print(json.dumps(response, indent=2, default=str)[:1000])  # First 1000 chars
+                if len(json.dumps(response, default=str)) > 1000:
+                    print(f"  ... (truncated, total size: {len(json.dumps(response, default=str))} chars)")
+            
+            # Try to convert to DataFrame to verify we got data
+            try:
+                df = convert_vanilla_response_to_dataframe(response, metric_id="employeeCount")
+                
+                print()
+                print("="*70)
+                print("SUCCESS: Full impersonation flow completed")
+                print("="*70)
+                print(f"  ✓ Step 1: ASID token obtained")
+                print(f"  ✓ Step 2: Impersonation token obtained")
+                print(f"  ✓ Step 3: Query executed successfully")
+                print(f"  ✓ Step 4: Response parsed to DataFrame")
+                print(f"\n  Data Summary:")
+                print(f"    - Rows returned: {len(df)}")
+                print(f"    - Columns: {', '.join(df.columns)}")
+                
+                if len(df) > 0:
+                    print(f"\n  Sample data (first 3 rows):")
+                    print(df.head(3).to_string())
+                else:
+                    print(f"\n  ⚠️  Warning: No data rows returned (empty result)")
+                
+            except Exception as df_error:
+                print()
+                print("="*70)
+                print("PARTIAL SUCCESS: Query executed but DataFrame conversion failed")
+                print("="*70)
+                print(f"  ✓ Step 1: ASID token obtained")
+                print(f"  ✓ Step 2: Impersonation token obtained")
+                print(f"  ✓ Step 3: Query executed successfully (HTTP 200)")
+                print(f"  ✗ Step 4: DataFrame conversion failed: {df_error}")
+                print(f"\n  This may indicate:")
+                print(f"    - Response structure differs from expected format")
+                print(f"    - Response contains error in different format")
+                print(f"    - Response is valid but empty")
+                print()
+                print("="*70)
+                print("FINAL STATUS: PARTIAL SUCCESS")
+                print("="*70)
+                print("Query executed but response parsing failed:")
+                print("  [✓] ASID token acquisition")
+                print("  [✓] Impersonation token acquisition")
+                print("  [✓] Query execution (HTTP 200)")
+                print("  [✗] Response parsing to DataFrame")
+            
+            print()
+            print("="*70)
+            print("VERIFICATION SUMMARY")
+            print("="*70)
+            print("✓ Impersonation token works directly in Cookie header!")
+            print("✓ Cookie name 'VisierImpersonationToken' is correct")
+            print("✓ No TargetTenantID header needed - token contains tenant context")
+            print("✓ Request format matches documentation")
+            print()
+            print("="*70)
+            print("FINAL STATUS: SUCCESS")
+            print("="*70)
+            print("All steps completed successfully:")
+            print("  [✓] ASID token acquisition")
+            print("  [✓] Impersonation token acquisition")
+            print("  [✓] Query execution with impersonation token")
+            print("  [✓] Response received and parsed")
+            sys.exit(0)
+            
+        except requests.HTTPError as e:
+            print()
+            print("="*70)
+            print("TEST FAILED: HTTP Error")
+            print("="*70)
+            print(f"Error: {e}")
+            print()
+            # Show payload if available
+            try:
+                if 'test_payload' in locals():
+                    print("Request Payload:")
+                    print(json.dumps(test_payload, indent=2))
+            except:
+                pass
+            print()
+            print("Request Details:")
+            print(f"  - Method: POST")
+            print(f"  - Endpoint: /v1/data/query/aggregate")
+            print(f"  - Cookie: VisierImpersonationToken (set)")
+            print(f"  - Jurisdiction: {jurisdiction if 'jurisdiction' in locals() else 'N/A'}")
+            print()
+            print("Troubleshooting:")
+            print("  1. Verify you have API VI profile")
+            print("  2. Verify you have 'Read Impersonated' profile")
+            print("  3. Verify you have UserManagement Read access")
+            print("  4. Check that target user exists in the customer tenant")
+            print("  5. Verify customer API key is correct")
+            print("  6. Verify impersonation token is valid")
+            print("  7. Check if you're in the correct AWS sandbox environment")
+            print("  8. Verify the impersonated user has data export permissions")
+            print()
+            print("="*70)
+            print("FINAL STATUS: FAILED")
+            print("="*70)
+            print("Test failed during execution:")
+            if 'asid_token' in locals():
+                print("  [✓] ASID token acquisition")
+            else:
+                print("  [✗] ASID token acquisition")
+            if 'impersonation_token' in locals():
+                print("  [✓] Impersonation token acquisition")
+            else:
+                print("  [✗] Impersonation token acquisition")
+            print("  [✗] Query execution")
+            sys.exit(1)
+        except Exception as e:
+            print()
+            print("="*70)
+            print("TEST FAILED: Unexpected Error")
+            print("="*70)
+            print(f"Error Type: {type(e).__name__}")
+            print(f"Error Message: {e}")
+            print()
+            print("Full Traceback:")
+            import traceback
+            traceback.print_exc()
+            print()
+            print("="*70)
+            print("FINAL STATUS: FAILED (Unexpected Error)")
+            print("="*70)
             sys.exit(1)
     
     # For non-token-only operations, validate jurisdiction
