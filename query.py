@@ -106,8 +106,12 @@ def validate_payload_structure(payload: dict) -> tuple[bool, list[str]]:
         errors.append("Missing 'source' in query")
     else:
         source = query["source"]
-        if "metric" not in source:
-            errors.append("Missing 'metric' in source")
+        if "metric" not in source and "metrics" not in source:
+            errors.append("Missing 'metric' or 'metrics' in source")
+        elif "metrics" in source:
+            cols = source.get("metrics", {}).get("columns", [])
+            if not cols:
+                errors.append("'source.metrics.columns' is empty")
     
     # Check axes (required)
     if "axes" not in query:
@@ -115,11 +119,24 @@ def validate_payload_structure(payload: dict) -> tuple[bool, list[str]]:
     elif not query["axes"]:
         errors.append("'axes' is empty (at least one axis is required)")
     else:
-        # Validate each axis
+        # Valid axis types (per OpenAPI): dimensionLevelSelection, numericRanges, dimensionMemberSelection, etc.
+        VALID_AXIS_KEYS = (
+            "dimensionLevelSelection",
+            "numericRanges",
+            "dimensionMemberSelection",
+            "memberMapSelection",
+            "formula",
+            "selectionConcept",
+            "dimensionLeafMemberSelection",
+            "dimensionDataMemberSelection",
+            "dimensionLevelWithUncategorizedValueSelection",
+        )
         for i, axis in enumerate(query["axes"]):
-            if "dimensionLevelSelection" not in axis:
-                errors.append(f"Axis {i+1}: Missing 'dimensionLevelSelection'")
-            else:
+            if not any(k in axis for k in VALID_AXIS_KEYS):
+                errors.append(
+                    f"Axis {i+1}: Must have one of {', '.join(VALID_AXIS_KEYS)}"
+                )
+            elif "dimensionLevelSelection" in axis:
                 dls = axis["dimensionLevelSelection"]
                 if "dimension" not in dls:
                     errors.append(f"Axis {i+1}: Missing 'dimension' in dimensionLevelSelection")
@@ -129,6 +146,12 @@ def validate_payload_structure(payload: dict) -> tuple[bool, list[str]]:
                     errors.append(f"Axis {i+1}: Missing 'levelIds' in dimensionLevelSelection")
                 elif not dls["levelIds"]:
                     errors.append(f"Axis {i+1}: 'levelIds' is empty (at least one level ID required)")
+            elif "numericRanges" in axis:
+                nr = axis["numericRanges"]
+                if "property" not in nr:
+                    errors.append(f"Axis {i+1}: Missing 'property' in numericRanges")
+                if "ranges" not in nr:
+                    errors.append(f"Axis {i+1}: Missing 'ranges' in numericRanges (space-separated bounds)")
     
     return len(errors) == 0, errors
 
@@ -237,7 +260,8 @@ def main():
     print_header("Executing Query")
     if args.verbose:
         print_info("Sending request to Visier API...")
-        metric_id = payload.get("query", {}).get("source", {}).get("metric", "unknown")
+        source = payload.get("query", {}).get("source", {})
+        metric_id = source.get("metric") or (source.get("metrics", {}).get("columns") or [{}])[0].get("id", "unknown")
         print_info(f"Metric: {metric_id}")
         axes_count = len(payload.get("query", {}).get("axes", []))
         print_info(f"Dimensions: {axes_count}")
@@ -267,7 +291,8 @@ def main():
     # Convert to DataFrame
     print_header("Processing Results")
     try:
-        metric_id = payload.get("query", {}).get("source", {}).get("metric")
+        source = payload.get("query", {}).get("source", {})
+        metric_id = source.get("metric") or (source.get("metrics", {}).get("columns") or [{}])[0].get("id")
         df = convert_vanilla_response_to_dataframe(response, metric_id=metric_id)
         
         if df.empty:

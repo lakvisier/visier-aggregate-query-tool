@@ -1,0 +1,82 @@
+{
+  "description": "Multi-metric run: same axes and time, different filters per metric. Script runs one query per metric and merges results into one CSV. Optional \"label\" per entry is used as the display name in the CSV (metric column); metric_id holds the raw metric id.",
+  "shared": {
+    "axes": [
+      {
+        "dimensionLevelSelection": {
+          "dimension": {
+            "name": "Function",
+            "qualifyingPath": "Employee_Exit.Employee"
+          },
+          "levelIds": ["Function"]
+        }
+      },
+      {
+        "dimensionLeafMemberSelection": {
+          "dimension": {
+            "name": "Employe_Tenure_Year",
+            "qualifyingPath": "Employee_Exit.Employee"
+          }
+        }
+      }
+    ],
+    "timeIntervals": {
+      "fromDateTime": "2026-01-01",
+      "intervalPeriodType": "MONTH",
+      "intervalCount": 12,
+      "direction": "BACKWARD"
+    },
+    "options": {
+      "calendarType": "GREGORIAN_CALENDAR",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      "internal": {
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  },
+  "metrics": [
+    {
+      "metric": "resignationRate",
+      "label": "Resignation Rate (US, IC2)",
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": { "name": "Employment_Type", "qualifyingPath": "Employee_Exit.Employee" },
+            "values": { "included": [{ "path": ["Full-time shifts"] }] }
+          }
+        },
+        {
+          "memberSet": {
+            "dimension": { "name": "Country_Cost", "qualifyingPath": "Employee_Exit.Employee" },
+            "values": { "included": [{ "path": ["United States"] }] }
+          }
+        },
+        {
+          "memberSet": {
+            "dimension": { "name": "Job_Family", "qualifyingPath": "Employee_Exit.Employee" },
+            "values": { "included": [{ "path": ["Individual Contributor 2"] }] }
+          }
+        }
+      ]
+    },
+    {
+      "metric": "resignationRate",
+      "label": "Resignation Rate (Canada)",
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": { "name": "Employment_Type", "qualifyingPath": "Employee_Exit.Employee" },
+            "values": { "included": [{ "path": ["Full-time shifts"] }] }
+          }
+        },
+        {
+          "memberSet": {
+            "dimension": { "name": "Country_Cost", "qualifyingPath": "Employee_Exit.Employee" },
+            "values": { "included": [{ "path": ["Canada"] }] }
+          }
+        }
+      ]
+    }
+  ]
+}

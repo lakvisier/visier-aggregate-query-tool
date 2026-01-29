@@ -1,0 +1,78 @@
+{
+  "description": "Client query – customize metric, axes, filters, and time. For Postman: use only the \"payload\" object as the request body.",
+  "payload": {
+    "query": {
+      "source": {
+        "metric": "resignationRate"
+      },
+      "axes": [
+        {
+          "dimensionLevelSelection": {
+            "dimension": {
+              "name": "Function",
+              "qualifyingPath": "Employee_Exit.Employee"
+            },
+            "levelIds": ["Function"]
+          }
+        },
+        {
+          "dimensionLeafMemberSelection": {
+            "dimension": {
+              "name": "Employe_Tenure_Year",
+              "qualifyingPath": "Employee_Exit.Employee"
+            }
+          }
+        }
+      ],
+      "filters": [
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Employment_Type",
+              "qualifyingPath": "Employee_Exit.Employee"
+            },
+            "values": {
+              "included": [{ "path": ["Full-time shifts"] }]
+            }
+          }
+        },
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Country_Cost",
+              "qualifyingPath": "Employee_Exit.Employee"
+            },
+            "values": {
+              "included": [{ "path": ["United States"] }]
+            }
+          }
+        },
+        {
+          "memberSet": {
+            "dimension": {
+              "name": "Job_Family",
+              "qualifyingPath": "Employee_Exit.Employee"
+            },
+            "values": {
+              "included": [{ "path": ["Individual Contributor 2"] }]
+            }
+          }
+        }
+      ],
+      "timeIntervals": {
+        "fromDateTime": "2026-01-01",
+        "intervalPeriodType": "MONTH",
+        "intervalCount": 12,
+        "direction": "BACKWARD"
+      }
+    },
+    "options": {
+      "calendarType": "GREGORIAN_CALENDAR",
+      "zeroVisibility": "ELIMINATE",
+      "nullVisibility": "ELIMINATE",
+      "internal": {
+        "alignTimeAxisToPeriodEnd": true
+      }
+    }
+  }
+}

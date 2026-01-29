@@ -83,6 +83,7 @@ A query payload is a JSON file that defines:
 ├── openapi.json         # Official Visier API OpenAPI specification
 ├── API_REFERENCE.md     # Complete API reference (based on OpenAPI spec)
 ├── QUICK_REFERENCE.md   # Quick reference guide
+├── WORKING_NOTES.md     # Working notes and learnings (event metrics, ranged dimensions)
 └── output/              # Query results (CSV files)
 ```
 
@@ -240,6 +241,7 @@ Common dimensions:
 
 - **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
 - **QUICK_REFERENCE.md** - Quick reference guide with common patterns
+- **WORKING_NOTES.md** - Working notes and learnings (event-based metrics, ranged dimensions, qualifying paths)
 - **examples/org_hierarchy_query.ipynb** - Interactive Jupyter notebook tutorial
 - **openapi.json** - Full OpenAPI 3.0 specification for all Visier APIs
 

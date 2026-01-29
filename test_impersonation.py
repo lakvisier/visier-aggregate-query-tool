@@ -2,7 +2,8 @@
 """
 Test Script for User Impersonation in Visier API
 
-This script tests the impersonation flow for accessing customer tenants.
+This script is for TESTING only. It tests the impersonation flow for accessing
+customer tenants. Do not use for production.
 It demonstrates how to use the TargetTenantID header to query data on behalf
 of a customer tenant.
 
@@ -443,8 +444,8 @@ def get_asid_token_with_impersonation(
     """
     Get an ASID authentication token using demographics vanity for impersonation.
     
-    This is a convenience wrapper that uses config from environment.
-    For direct control, use get_visier_secure_token() instead.
+    This function prioritizes impersonation-specific credentials (VISIER_IMPERSONATION_MY_*)
+    over regular credentials (VISIER_*).
     
     Args:
         jurisdiction: Jurisdiction code ("US", "EU", "CA", "APAC")
@@ -454,15 +455,29 @@ def get_asid_token_with_impersonation(
     Returns:
         ASID token string
     """
-    if config is None:
-        config = get_api_config()
+    # Priority: 1) Impersonation-specific env vars, 2) Config dict, 3) Regular env vars
+    username = os.getenv("VISIER_IMPERSONATION_MY_USERNAME")
+    password = os.getenv("VISIER_IMPERSONATION_MY_PASSWORD")
+    apikey = os.getenv("VISIER_IMPERSONATION_APIKEY")
+    
+    # If impersonation-specific credentials not found, use config
+    if not username or not password:
+        if config is None:
+            config = get_api_config()
+        username = username or config.get("username")
+        password = password or config.get("password")
+        apikey = apikey or config.get("apikey")
+    
+    verify_ssl = True
+    if config:
+        verify_ssl = config.get("verify_ssl", True)
     
     return get_visier_secure_token(
-        username=config["username"],
-        password=config["password"],
+        username=username,
+        password=password,
         jurisdiction=jurisdiction,
-        apikey=config.get("apikey"),
-        verify_ssl=config.get("verify_ssl", True)
+        apikey=apikey,
+        verify_ssl=verify_ssl
     )
 
 
@@ -760,29 +775,26 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Test token acquisition only (no tenant needed)
-  python test_impersonation.py --test-token-only \\
-    --username YOUR_USERNAME --password YOUR_PASSWORD --jurisdiction US
+  # Execute query with impersonation (uses default org hierarchy payload)
+  # If VISIER_IMPERSONATION_TARGET_TENANT_ID and VISIER_IMPERSONATION_JURISDICTION are in .env:
+  python test_impersonation.py
   
-  # Test impersonation token acquisition (step 2)
-  python test_impersonation.py --test-impersonation-token \\
-    --target-user customer.user@example.com --target-tenant "customer-tenant-123" \\
-    --customer-apikey CUSTOMER_API_KEY --jurisdiction US
+  # Or specify on command line:
+  python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction US
   
-  # Test full flow: get tokens + execute query with impersonation token (direct)
-  python test_impersonation.py --test-impersonation-token-query \\
-    --target-user customer.user@example.com --target-tenant "customer-tenant-123" \\
-    --customer-apikey CUSTOMER_API_KEY --jurisdiction US
-  
-  # Test impersonation with EU jurisdiction (using TargetTenantID header)
-  python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction EU --test-query
-  
-  # Execute query with US jurisdiction (using TargetTenantID header)
+  # Execute query with custom payload file
   python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction US \\
                                 --payload examples/query_payload_examples.json
   
-  # Test with APAC jurisdiction (using TargetTenantID header)
-  python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction APAC --test-query
+  # Execute query and save results to CSV
+  python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction US \\
+                                --output results.csv
+  
+  # Test connection with simple query
+  python test_impersonation.py --target-tenant "customer-tenant-123" --jurisdiction US --test-query
+  
+  # Test token acquisition only (for debugging)
+  python test_impersonation.py --test-token-only --jurisdiction US
 
 IMPORTANT: Before using impersonation:
   1. You MUST have VTSI profile for API access
@@ -795,13 +807,13 @@ IMPORTANT: Before using impersonation:
     
     parser.add_argument(
         "--target-tenant",
-        help="Target tenant ID to impersonate (customer tenant). Can also be set via VISIER_IMPERSONATION_TARGET_TENANT_ID in .env. Required unless --test-token-only"
+        help="Target tenant ID to impersonate (customer tenant). Optional if VISIER_IMPERSONATION_TARGET_TENANT_ID is set in .env. Required unless --test-token-only"
     )
     
     parser.add_argument(
         "--jurisdiction",
         choices=["US", "EU", "CA", "APAC"],
-        help="Jurisdiction for demographics vanity (US, EU, CA, or APAC). Can also be set via VISIER_IMPERSONATION_JURISDICTION in .env (your jurisdiction)"
+        help="Jurisdiction for demographics vanity (US, EU, CA, or APAC). Optional if VISIER_IMPERSONATION_JURISDICTION is set in .env"
     )
     
     parser.add_argument(
@@ -868,6 +880,10 @@ IMPORTANT: Before using impersonation:
     if not args.target_user:
         args.target_user = os.getenv("VISIER_IMPERSONATION_TARGET_USERNAME")
     
+    # Get jurisdiction from env var if not provided via command line
+    if not args.jurisdiction:
+        args.jurisdiction = os.getenv("VISIER_IMPERSONATION_JURISDICTION")
+    
     # Validate that target-tenant is provided unless testing tokens only
     if not args.test_token_only and not args.test_impersonation_token and not args.test_impersonation_token_query and not args.target_tenant:
         parser.error("--target-tenant is required (or set VISIER_IMPERSONATION_TARGET_TENANT_ID in .env) unless using --test-token-only, --test-impersonation-token, or --test-impersonation-token-query")
@@ -881,14 +897,8 @@ IMPORTANT: Before using impersonation:
     
     # Print header
     print("="*70)
-    print("VISIER API USER IMPERSONATION TEST")
+    print("VISIER API USER IMPERSONATION - QUERY EXECUTION")
     print("="*70)
-    print()
-    print("⚠️  IMPORTANT: This script tests user impersonation.")
-    print("   - Requires VTSI profile for API access")
-    print("   - Uses demographics vanity (NOT customer vanity)")
-    print("   - Ensure you have exceptional access permissions")
-    print("   - See impersonator.md for the approval process")
     print()
     
     # Test token acquisition only (check this first, before jurisdiction validation)
@@ -1370,31 +1380,27 @@ IMPORTANT: Before using impersonation:
             print("="*70)
             sys.exit(1)
     
-    # For non-token-only operations, validate jurisdiction
+    # For non-token-only operations, validate jurisdiction and load config
     try:
         demographics_vanity = get_demographics_vanity(args.jurisdiction)
         demographics_host = build_demographics_host(args.jurisdiction)
-        print(f"✓ Jurisdiction: {args.jurisdiction}")
-        print(f"  Demographics Vanity: {demographics_vanity}")
-        print(f"  Demographics Host: {demographics_host}")
-        print()
-    except ValueError as e:
-        print(f"✗ Jurisdiction error: {e}")
-        sys.exit(1)
-    
-    # Load config for other operations
-    try:
         config = get_api_config()
-        print("✓ API configuration loaded")
-        print(f"  Username: {config.get('username', 'Not set')}")
-        print(f"  API Key: {'Set' if config.get('apikey') else 'Not set'}")
-        print()
-        print("⚠️  Note: For impersonation, we use demographics vanity, not the")
-        print(f"   vanity from your config ({config.get('vanity', 'N/A')})")
+        
+        # Check which username will be used (impersonation-specific or regular)
+        username = os.getenv("VISIER_IMPERSONATION_MY_USERNAME") or config.get('username', 'Not set')
+        username_source = "VISIER_IMPERSONATION_MY_USERNAME" if os.getenv("VISIER_IMPERSONATION_MY_USERNAME") else "VISIER_USERNAME"
+        
+        print(f"✓ Configuration loaded")
+        print(f"  Jurisdiction: {args.jurisdiction}")
+        print(f"  Demographics Vanity: {demographics_vanity}")
+        print(f"  Username: {username} (from {username_source})")
         print()
     except ValueError as e:
         print(f"✗ Configuration error: {e}")
-        print("  → Run: python query.py --setup")
+        if "jurisdiction" in str(e).lower():
+            print(f"  Available jurisdictions: US, EU, CA, APAC")
+        else:
+            print(f"  → Run: python query.py --setup")
         sys.exit(1)
     
     # Test connection if requested
@@ -1402,56 +1408,165 @@ IMPORTANT: Before using impersonation:
         success = test_impersonation_connection(args.target_tenant, args.jurisdiction, config)
         sys.exit(0 if success else 1)
     
-    # Load or build query payload
+    # Load query payload (default to org hierarchy payload)
     if args.payload:
         print(f"→ Loading query payload from: {args.payload}")
         payload = load_query_payload_from_json(args.payload)
         print("✓ Payload loaded")
     else:
-        print("→ Building default test query...")
+        # Use hardcoded org hierarchy payload as default
+        print("→ Using default org hierarchy query payload")
         payload = {
             "query": {
-                "source": {"metric": "employeeCount"},
+                "source": {
+                    "metric": "employeeCount"
+                },
                 "axes": [
-                    create_dimension_axis("Country_Cost", level_ids=["Country"])
+                    {
+                        "dimensionLevelSelection": {
+                            "dimension": {
+                                "name": "Organization_Hierarchy",
+                                "qualifyingPath": "Employee"
+                            },
+                            "levelIds": ["Level_2"]
+                        }
+                    },
+                    {
+                        "dimensionLevelSelection": {
+                            "dimension": {
+                                "name": "Location",
+                                "qualifyingPath": "Employee"
+                            },
+                            "levelIds": ["Location_0"]
+                        }
+                    },
+                    {
+                        "dimensionLevelSelection": {
+                            "dimension": {
+                                "name": "Country_Cost",
+                                "qualifyingPath": "Employee"
+                            },
+                            "levelIds": ["Country"]
+                        }
+                    }
+                ],
+                "filters": [
+                    {
+                        "memberSet": {
+                            "dimension": {
+                                "name": "Employment_Type",
+                                "qualifyingPath": "Employee"
+                            },
+                            "values": {
+                                "included": [
+                                    {
+                                        "path": ["Full-time shifts"]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                    # To add a filter for a levelled dimension with two levels:
+                    # The path array should include the full hierarchy path from top to bottom level
+                    # Example for filtering on lower level "regular":
+                    # {
+                    #     "memberSet": {
+                    #         "dimension": {
+                    #             "name": "Your_Levelled_Dimension_Name",
+                    #             "qualifyingPath": "Employee"
+                    #         },
+                    #         "values": {
+                    #             "included": [
+                    #                 {
+                    #                     # For two-level dimension: [upper_level_value, lower_level_value]
+                    #                     # Replace "Upper_Level_Value" with the actual upper level value
+                    #                     "path": ["Upper_Level_Value", "regular"]
+                    #                 }
+                    #             ]
+                    #         }
+                    #     }
+                    # }
                 ],
                 "timeIntervals": {
-                    "fromDateTime": "2026-01-01",
+                    "fromDateTime": "2025-11-28",
                     "intervalPeriodType": "YEAR",
                     "intervalCount": 5,
                     "direction": "BACKWARD"
                 }
             },
             "options": {
+                "calendarType": "TENANT_CALENDAR",
                 "zeroVisibility": "ELIMINATE",
-                "nullVisibility": "ELIMINATE"
+                "nullVisibility": "ELIMINATE",
+                "internal": {
+                    "alignTimeAxisToPeriodEnd": True
+                }
             }
         }
-        print("✓ Default payload created")
+        print("✓ Default org hierarchy payload ready")
     
     print()
+    print("="*70)
+    print("EXECUTING QUERY WITH IMPERSONATION")
+    print("="*70)
+    print(f"Target Tenant: {args.target_tenant}")
+    print(f"Jurisdiction: {args.jurisdiction}")
+    print(f"Metric: {payload['query']['source']['metric']}")
+    print()
     
-    # Execute query with impersonation
+    # Execute query with impersonation using two-step token approach
     try:
-        response = execute_query_with_impersonation(
-            payload=payload,
+        # Step 1: Get ASID token
+        print("Step 1: Getting ASID token...")
+        asid_token = get_asid_token_with_impersonation(args.jurisdiction, config, args.target_tenant)
+        print()
+        
+        # Step 2: Get impersonation token
+        print("Step 2: Getting impersonation token...")
+        target_user = args.target_user or os.getenv("VISIER_IMPERSONATION_TARGET_USERNAME")
+        customer_apikey = os.getenv("VISIER_IMPERSONATION_CUSTOMER_APIKEY")
+        
+        if not target_user:
+            raise ValueError("Target username required. Set VISIER_IMPERSONATION_TARGET_USERNAME in .env or use --target-user")
+        if not customer_apikey:
+            raise ValueError("Customer API key required. Set VISIER_IMPERSONATION_CUSTOMER_APIKEY in .env")
+        
+        impersonation_token = get_visier_impersonation_token(
+            asid_token=asid_token,
+            target_user_name=target_user,
             target_tenant_id=args.target_tenant,
-            jurisdiction=args.jurisdiction,
-            config=config
+            customer_apikey=customer_apikey,
+            jurisdiction=args.jurisdiction
+        )
+        print()
+        
+        # Step 3: Execute query with impersonation token
+        print("Step 3: Executing query with impersonation token...")
+        response = execute_query_with_impersonation_token(
+            payload=payload,
+            impersonation_token=impersonation_token,
+            customer_apikey=customer_apikey,
+            jurisdiction=args.jurisdiction
         )
         
         # Convert to DataFrame
         metric_id = payload["query"]["source"]["metric"]
         df = convert_vanilla_response_to_dataframe(response, metric_id=metric_id)
         
-        print(f"\n✓ Query executed successfully!")
-        print(f"  - Rows: {len(df)}")
-        print(f"  - Columns: {', '.join(df.columns)}")
+        print()
+        print("="*70)
+        print("QUERY RESULTS")
+        print("="*70)
+        print(f"✓ Query executed successfully!")
+        print(f"  Rows returned: {len(df)}")
+        print(f"  Columns: {', '.join(df.columns)}")
         
         # Show sample data
         if len(df) > 0:
             print(f"\n  Sample data (first 5 rows):")
             print(df.head(5).to_string())
+        else:
+            print(f"\n  ⚠️  Warning: No data rows returned (empty result)")
         
         # Save to CSV if requested
         if args.output:
@@ -1461,7 +1576,7 @@ IMPORTANT: Before using impersonation:
             print(f"\n✓ Results saved to: {output_path}")
         
         print("\n" + "="*70)
-        print("SUCCESS: Impersonation test completed")
+        print("SUCCESS: Query completed successfully")
         print("="*70)
         
     except requests.HTTPError as e:
