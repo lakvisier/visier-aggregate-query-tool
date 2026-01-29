@@ -1,6 +1,6 @@
 # Working Notes: Aggregate Query Payloads
 
-Practical learnings from building and validating payloads with the Visier Aggregate Query API. Use this alongside `QUICK_REFERENCE.md` and `API_REFERENCE.md`.
+Practical learnings from building and validating payloads with the Visier Aggregate Query API. Use this alongside `REFERENCE.md`.
 
 ---
 
@@ -99,7 +99,7 @@ Results: CSV with columns `Measures`, `TimeInInterval`, `Function`, `Employe_Ten
 
 ## 7. Query options (quick reference)
 
-See `QUICK_REFERENCE.md` and OpenAPI for full list. Commonly used:
+See `REFERENCE.md` and OpenAPI for full list. Commonly used:
 
 - **calendarType:** `TENANT_CALENDAR` | `GREGORIAN_CALENDAR`
 - **zeroVisibility** / **nullVisibility:** `SHOW` | `HIDE` | `ELIMINATE`

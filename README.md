@@ -91,9 +91,8 @@ A query payload is a JSON file that defines:
 │   ├── query_payload_template.json              # Template with extensive comments
 │   └── example_usage.py                         # Programmatic usage examples
 ├── output/                   # Query results (CSV files)
-├── QUICK_REFERENCE.md        # Quick reference guide
-├── WORKING_NOTES.md          # Working notes (event metrics, ranged dimensions, Postman)
-├── API_REFERENCE.md          # Complete API reference (based on OpenAPI spec)
+├── REFERENCE.md              # API reference, patterns, dimensions, options
+├── WORKING_NOTES.md          # Advanced patterns (event metrics, ranged dimensions, Postman)
 └── openapi.json              # Official Visier API OpenAPI specification
 ```
 
@@ -223,7 +222,7 @@ VISIER_VERIFY_SSL=false
 7. **Validate first**: Run with `--validate-only` before executing
 8. **Execute**: Run the query and check results
 
-**See also**: `QUICK_REFERENCE.md` for common patterns and quick examples.
+**See also**: `REFERENCE.md` for common patterns, dimensions, and quick examples.
 
 ## 🔍 Discovering Available Metrics and Dimensions
 
@@ -250,9 +249,8 @@ Common dimensions:
 
 ## 📚 Documentation
 
-- **QUICK_REFERENCE.md** - Quick reference guide with common patterns
-- **WORKING_NOTES.md** - Working notes and learnings (event metrics, ranged dimensions, multi-metric, Postman)
-- **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
+- **REFERENCE.md** - API reference, common patterns, dimensions, time intervals, options
+- **WORKING_NOTES.md** - Advanced patterns (event metrics, ranged dimensions, Postman, multi-metric)
 - **openapi.json** - Full OpenAPI 3.0 specification for all Visier APIs
 
 ## 🤝 Getting Help
@@ -260,7 +258,7 @@ Common dimensions:
 1. Check the examples in `examples/` directory
 2. Use `--validate-only` to test payloads without executing
 3. Use `--verbose` to see detailed execution information
-4. See `API_REFERENCE.md` for complete API documentation
+4. See `REFERENCE.md` for complete API documentation
 5. Contact your Visier administrator for metric/dimension availability
 
 ## 📄 License
