@@ -12,9 +12,9 @@ venv/
 env/
 ENV/
 
-# Output
+# Output (all CSV results ignored, .gitkeep preserved)
 output/*.csv
-scripts/output/*.csv
+examples/output/
 !output/.gitkeep
 
 # IDE
@@ -29,3 +29,9 @@ Thumbs.db
 
 # Cursor IDE
 .cursorrules
+
+# Internal/development files (not needed by end users)
+test_impersonation.py
+impersonator.md
+AWS_WORKSPACE_FILES.txt
+AWS_WORKSPACE_SETUP.md

@@ -17,10 +17,17 @@ uv pip install -r requirements.txt
 
 ### 2. Setup Credentials
 
-Run the interactive setup to configure your Visier API credentials:
+**Option A: Interactive setup**
 
 ```bash
 python query.py --setup
+```
+
+**Option B: Manual setup**
+
+```bash
+cp .env.example .env
+# Edit .env with your credentials
 ```
 
 You'll need:
@@ -29,7 +36,7 @@ You'll need:
 - **Vanity name** (your organization's vanity)
 - **Username** and **Password**
 
-This creates a `.env` file (automatically ignored by git).
+The `.env` file is automatically ignored by git (never committed).
 
 ### 3. Run Your First Query
 
@@ -71,42 +78,44 @@ A query payload is a JSON file that defines:
 
 ```
 .
-├── query.py              # Main script - run queries from JSON payloads
-├── client.py             # Visier API client (use programmatically)
-├── setup.py              # Interactive credential setup
-├── examples/             # Example payload files
-│   ├── query_payload_examples.json              # Basic example
+├── query.py                  # Main script - run single queries from JSON payloads
+├── run_multi_metric.py       # Run multiple metrics (different filters) → one CSV
+├── client.py                 # Visier API client (use programmatically)
+├── setup.py                  # Interactive credential setup
+├── .env.example              # Template for environment variables (copy to .env)
+├── examples/                 # Example payload files
+│   ├── query_payload_examples.json              # Basic example (Employee metrics)
 │   ├── query_payload_examples_org_hierarchy.json # Organization hierarchy example
+│   ├── query_payload_client.json                # Client example (event metrics, filters)
+│   ├── query_multi_metric_config.json           # Multi-metric config example
 │   ├── query_payload_template.json              # Template with extensive comments
-│   ├── example_usage.py                         # Programmatic usage examples
-│   └── org_hierarchy_query.ipynb                # Jupyter notebook tutorial
-├── openapi.json         # Official Visier API OpenAPI specification
-├── API_REFERENCE.md     # Complete API reference (based on OpenAPI spec)
-├── QUICK_REFERENCE.md   # Quick reference guide
-├── WORKING_NOTES.md     # Working notes and learnings (event metrics, ranged dimensions)
-└── output/              # Query results (CSV files)
+│   └── example_usage.py                         # Programmatic usage examples
+├── output/                   # Query results (CSV files)
+├── QUICK_REFERENCE.md        # Quick reference guide
+├── WORKING_NOTES.md          # Working notes (event metrics, ranged dimensions, Postman)
+├── API_REFERENCE.md          # Complete API reference (based on OpenAPI spec)
+└── openapi.json              # Official Visier API OpenAPI specification
 ```
 
-## 📓 Jupyter Notebook
+## 🔄 Multi-Metric Queries
 
-For interactive learning about the Visier API, use the Jupyter notebook:
+Run multiple metrics with **different filters** per metric and merge results into **one CSV**:
 
 ```bash
-# Install dependencies (includes Jupyter)
-pip install -r requirements.txt
+# Run with default config
+python run_multi_metric.py --config examples/query_multi_metric_config.json
 
-# Launch Jupyter
-jupyter notebook examples/org_hierarchy_query.ipynb
+# Custom output path
+python run_multi_metric.py --config examples/query_multi_metric_config.json --output output/my_results.csv
 ```
 
-The notebook is an educational tutorial that teaches:
-- How the Visier Aggregate Query API works
-- Query payload structure and components
-- Understanding dimensions, metrics, and filters
-- How to modify queries for your needs
-- Best practices and common patterns
+The config file (`examples/query_multi_metric_config.json`) defines:
+- **shared**: axes, timeIntervals, options (same for all metrics)
+- **metrics**: array of `{ "metric": "...", "label": "...", "filters": [...] }`
 
-**Note**: The notebook focuses on API education, not data analysis. All required packages (including Jupyter and ipykernel) are in `requirements.txt`.
+Each metric can have different filters. The output CSV has columns: `metric` (display label), `metric_id`, dimensions, `value`, `support`.
+
+See `WORKING_NOTES.md` §9 for details.
 
 ## 💻 Programmatic Usage
 
@@ -232,17 +241,18 @@ Common dimensions:
 
 ## 📚 Files Explained
 
-- **`query.py`**: Main entry point. Run queries from JSON payload files.
+- **`query.py`**: Main entry point. Run single queries from JSON payload files.
+- **`run_multi_metric.py`**: Run multiple metrics (different filters each) → one merged CSV.
 - **`client.py`**: Low-level API client. Use this if you want to build queries programmatically.
 - **`setup.py`**: Interactive credential configuration.
+- **`.env.example`**: Template for environment variables (copy to `.env`).
 - **`examples/`**: Example payloads showing different query patterns.
 
 ## 📚 Documentation
 
-- **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
 - **QUICK_REFERENCE.md** - Quick reference guide with common patterns
-- **WORKING_NOTES.md** - Working notes and learnings (event-based metrics, ranged dimensions, qualifying paths)
-- **examples/org_hierarchy_query.ipynb** - Interactive Jupyter notebook tutorial
+- **WORKING_NOTES.md** - Working notes and learnings (event metrics, ranged dimensions, multi-metric, Postman)
+- **API_REFERENCE.md** - Complete API reference based on official OpenAPI specification
 - **openapi.json** - Full OpenAPI 3.0 specification for all Visier APIs
 
 ## 🤝 Getting Help

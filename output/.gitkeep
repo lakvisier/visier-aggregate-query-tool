@@ -1,0 +1,2 @@
+# This file ensures the output directory exists after git clone.
+# Query results (CSV files) are saved here.

@@ -1,11 +1,8 @@
 # Visier Aggregate Query Tool - Dependencies
 # Install with: pip install -r requirements.txt
+# Or with uv: uv pip install -r requirements.txt
 
 # Core dependencies
 requests>=2.31.0
 python-dotenv>=1.0.0
 pandas>=2.0.0
-
-# Jupyter notebook support (optional, for running org_hierarchy_query.ipynb)
-jupyter>=1.0.0
-ipykernel>=6.0.0
