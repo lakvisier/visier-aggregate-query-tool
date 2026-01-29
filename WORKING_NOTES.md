@@ -65,7 +65,25 @@ For event-based metrics, keep the same path: `Employee_Exit.Employee`.
 | **dimensionLevelSelection**     | Levelled dimensions (Function, Country_Cost, Organization_Hierarchy). Requires `levelIds` (e.g. `["Function"]`, `["Country"]`). |
 | **dimensionLeafMemberSelection**| Ranged dimensions or when you want all leaf members of a dimension (e.g. Employe_Tenure_Year). No `levelIds`. |
 | **numericRanges**              | Group by a numeric property with custom buckets. Requires `property` (name + qualifyingPath) and `ranges` (space-separated bounds). |
-| **dimensionMemberSelection**    | Explicit list of dimension members. |
+| **dimensionMemberSelection**    | Explicit list of dimension members to include in the axis. |
+| **memberMapSelection**          | Use an existing member map defined in Visier. |
+| **selectionConcept**           | Use a boolean selection concept (e.g. `isManager`). Returns 3 positions: True, False, Unknown. |
+| **formula**                    | Ad-hoc axis expressed as a formula string. |
+
+### selectionConcept axis example
+
+Group by a boolean concept like "is manager":
+
+```json
+{
+  "selectionConcept": {
+    "name": "isManager",
+    "qualifyingPath": "Employee"
+  }
+}
+```
+
+Returns rows for `True`, `False`, and `Unknown`.
 
 ---
 
@@ -97,19 +115,126 @@ Results: CSV with columns `Measures`, `TimeInInterval`, `Function`, `Employe_Ten
 
 ---
 
-## 7. Query options (quick reference)
+## 7. Filter types
+
+Beyond `memberSet`, filters support:
+
+| Filter type | Description |
+|-------------|-------------|
+| **memberSet** | Filter by dimension members (included/excluded paths). Most common. |
+| **selectionConcept** | Filter by a boolean concept (e.g. `isManager`, `isFemale`). |
+| **formula** | Ad-hoc filter expressed as a formula string. |
+
+### selectionConcept filter example
+
+Filter to only managers:
+
+```json
+{
+  "filters": [{
+    "selectionConcept": {
+      "name": "isManager",
+      "qualifyingPath": "Employee"
+    }
+  }]
+}
+```
+
+### formula filter example
+
+```json
+{
+  "filters": [{
+    "formula": "Employee.Age > 30"
+  }]
+}
+```
+
+---
+
+## 8. Formula-based queries
+
+Instead of a pre-defined metric, use an ad-hoc formula:
+
+```json
+"source": {
+  "formula": "count(Employee)"
+}
+```
+
+Formulas can also be used in axes and filters. See Visier's formula dictionary for available functions.
+
+---
+
+## 9. Dynamic time intervals
+
+Instead of hardcoding `fromDateTime`, use `dynamicDateFrom` to query from the metric's data boundaries:
+
+| Value | Behavior |
+|-------|----------|
+| `SOURCE` | Use the metric's earliest/latest data date (based on `direction`). |
+| `COMPLETE_PERIOD` | Use the latest/earliest date with a **complete period** of data. |
+
+```json
+"timeIntervals": {
+  "dynamicDateFrom": "SOURCE",
+  "intervalPeriodType": "MONTH",
+  "intervalCount": 12,
+  "direction": "BACKWARD"
+}
+```
+
+This automatically adjusts to your tenant's data availability — useful for dashboards that should always show "latest 12 months."
+
+---
+
+## 10. Sorting and limiting axes
+
+Sort axis members by configuration or metric value:
+
+```json
+{
+  "dimensionLevelSelection": {
+    "dimension": { "name": "Country_Cost", "qualifyingPath": "Employee" },
+    "levelIds": ["Country"]
+  },
+  "options": {
+    "sort": {
+      "sortType": "METRIC_VALUE",
+      "sortDirection": "SORT_DESCENDING"
+    },
+    "limit": { "maxMembers": 10 }
+  }
+}
+```
+
+| sortType | Behavior |
+|----------|----------|
+| `CONFIGURED` | Alphabetical for parent-child dims; configured order for others. |
+| `METRIC_VALUE` | Sort by the metric value (only works with 1 axis + 1 time member). |
+
+---
+
+## 11. Query options (full reference)
 
 See `REFERENCE.md` and OpenAPI for full list. Commonly used:
 
-- **calendarType:** `TENANT_CALENDAR` | `GREGORIAN_CALENDAR`
-- **zeroVisibility** / **nullVisibility:** `SHOW` | `HIDE` | `ELIMINATE`
-- **internal.alignTimeAxisToPeriodEnd:** `true` — aligns time to period end (e.g. year-end) to match Visier UI
+| Option | Values | Description |
+|--------|--------|-------------|
+| `calendarType` | `TENANT_CALENDAR`, `GREGORIAN_CALENDAR` | Calendar for time calculations |
+| `zeroVisibility` | `SHOW`, `HIDE`, `ELIMINATE` | How to handle zeros |
+| `nullVisibility` | `SHOW`, `HIDE`, `ELIMINATE` | How to handle nulls |
+| `memberDisplayMode` | `DEFAULT`, `COMPACT`, `DISPLAY`, `MDX`, `COMPACT_DISPLAY` | How member values display |
+| `axisVisibility` | `SIMPLE`, `VERBOSE` | Amount of axis metadata returned |
+| `currencyConversionCode` | e.g. `"USD"` | Override tenant's default currency |
+| `internal.alignTimeAxisToPeriodEnd` | `true` | Align to period end (match Visier UI) |
+| `enableSparseResults` | `true` | Only return non-zero/non-null cells |
 
 ---
 
 ---
 
-## 8. Using the payload in Postman (or other REST clients)
+## 12. Using the payload in Postman (or other REST clients)
 
 **The JSON file is not sent 1:1.** The tool unwraps it:
 
@@ -128,7 +253,7 @@ So: **Body = contents of `payload`** from `query_payload_client.json`, not the f
 
 ---
 
-## 9. Multiple metrics, same group-by and time, different filters per metric
+## 13. Multiple metrics, same group-by and time, different filters per metric
 
 **API limitation:** The aggregate API has one **filters** array per request. There is no per-metric filter — so “each metric filtered differently” cannot be done in a single API call.
 
@@ -136,7 +261,23 @@ So: **Body = contents of `payload`** from `query_payload_client.json`, not the f
 
 ### A. Same filters for all metrics → one request, one CSV
 
-Use **source.metrics** (plural) with multiple metric columns, same axes and timeIntervals, and the same filters. Request **Accept: text/csv** so the API returns one CSV with one column per metric. All metrics must reference the same analytic object (e.g. all Employee_Exit). The client would need to send `Accept: text/csv` and handle CSV response; the tool does not yet support this path.
+Use **source.metrics** (plural) with multiple metric columns, same axes and timeIntervals, and the same filters. Request **Accept: text/csv** so the API returns one CSV with one column per metric.
+
+```json
+"source": {
+  "metrics": {
+    "columns": [
+      { "id": "employeeCount" },
+      { "id": "headcount" },
+      { "id": "resignationRate", "qualifyingPath": "Employee_Exit.Employee" }
+    ]
+  }
+}
+```
+
+**Key:** Each metric column can have its own `qualifyingPath` to handle metrics with different convergent objects in the same query.
+
+**Limitation:** All metrics share the same `filters` array — no per-metric filters in a single request.
 
 ### B. Different filters per metric → N requests, one merged CSV (recommended)
 
@@ -157,4 +298,4 @@ Run **one query per metric** (each with its own filters), then merge results int
 
 ---
 
-*Last updated from learnings while building `examples/query_payload_client.json` and multi-metric flow.*
+*Last updated: Enriched with OpenAPI spec findings (axis types, filter types, formulas, dynamic time, sorting, options).*
